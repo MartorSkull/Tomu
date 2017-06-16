@@ -1,0 +1,19 @@
+.logo{
+    max-height: 99%;
+    margin-left: 10px;
+    width: auto;
+}
+
+.full{
+    max-height: 99%;
+    max-width: 99%;
+    margin-top: 10px;
+}
+
+.links{
+    color: white;
+}
+
+.log-in{
+    width: 200px;
+}

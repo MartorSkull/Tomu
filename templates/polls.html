@@ -1,0 +1,47 @@
+{% extends "Base.html" %}
+
+{% block title %}Tomu's Polls{% endblock title %}
+
+{% block imports %}
+  {% load static %}
+  <!-- Load c3.css -->
+  <link href="{% static "css/c3.min.css" %}" rel="stylesheet">
+
+  <!-- Load d3.js and c3.js -->
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="{% static "js/c3.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/polls.js" %}"></script>
+{% endblock imports %}
+
+{% block polla %}grey{% endblock polla %}
+
+{% block bod %}
+    {% for poll in polls %}
+      <div class="col s12 m7">
+        <h2 class="header">{{ poll }}</h2>
+        <div class="card horizontal">
+          <div class="card-stacked">
+            <div class="card-content">
+              <form action="{% url 'polls' %}" method="POST" accept-charset="utf-8">
+              {% csrf_token %}
+              {% for choice in poll.allChoices %}
+                <p>
+                  <input name="choice" class="black" type="radio" id="{{choice.choice}}"/>
+                  <label for="{{ choice.choice }}">{{choice.choice}}</label>
+                </p>
+              {% endfor %}
+              </form>
+            </div>
+            <div class="card-action">
+              <button class="btn waves-effect waves-light" type="submit" name="action">Vote
+              <i class="material-icons right">send</i>
+            </button>
+            </div>
+          </div>
+          <div class="card-image" id="graph-{{ poll.id }}">
+            <button onclick="drawthispoll({{ poll.id }})">View Results</button>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+{% endblock bod %}
