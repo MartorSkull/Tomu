@@ -15,4 +15,3 @@ class Chatter(models.Model):
 
     def __str__(self):
         return discord_username
-

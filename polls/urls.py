@@ -1,6 +1,5 @@
 from django.conf.urls import url
 from .views import *
-from tomu import apps
 
 urlpatterns = [
     url(r'^$', polls, name="polls"),
@@ -9,4 +8,3 @@ urlpatterns = [
     url(r'^new/', login_required(makePoll) , name="makePoll")
 ]
 
-apps.ready()

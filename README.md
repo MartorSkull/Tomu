@@ -1,2 +1,2 @@
 # Tomu
-the project for the discrod bot for django
+the project for the discord bot for django, Dingo

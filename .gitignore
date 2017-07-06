@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# personal
+tomu/bot/config.py
+backlog

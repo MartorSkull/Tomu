@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from tomu.views import *
+from dingo.views import *
 import polls.urls
+import os
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

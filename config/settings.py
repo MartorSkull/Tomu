@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-from .local_settings import TOKEN
+from .local_settings import TOKEN, botToken
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tomu',
+    'dingo',
     'polls',
 ]
 
@@ -124,3 +124,24 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),
 ]
+
+BOTCONFIG={
+    'main': {
+        'token': botToken, #this is the Discord Token to connect
+        'botmodule': "botcom" #this is the module that the bot will search commands for in each app
+    },
+    'bot':{
+        'prefixes': ["!"] #command prefixes
+    },
+    'strings':{
+        'description': "Tomu - The bot with its own webpage" #bots description
+    },
+    'server': {
+        'announces': "announcements", #the name of the anouncements channel
+        'output': "logs", #the name of the channel where the bot will send its logs
+        'bot-role': "Tomu", #the name of the role that the bot will use
+        'admin-role': "admin", #the name for the admin role
+        'bot-color': 0x11806A, #the color for the bot role
+        'admin-color': 0xE74C3C #the color for the admin role
+    },
+}

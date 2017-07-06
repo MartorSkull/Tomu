@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 
-
 class testCommands:
     def __init__(self, bot):
         self.bot = bot
@@ -9,7 +8,7 @@ class testCommands:
 
     @commands.command(pass_context=True)
     async def hi(self, ctx):
-        await self.bot.say("hi {}, how are you?".format(ctx.message.author.name))
+        await self.bot.say("hi {}, how are you?".format(ctx.message.author.mention))
 
     @commands.command(pass_context=True)
     async def sendnudes(self, ctx):
