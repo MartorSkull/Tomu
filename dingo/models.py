@@ -6,12 +6,13 @@ from django.db import models
 
 class Chatter(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    discord_id = models.IntegerField()
     discord_username = models.CharField(max_length=32)
-    tempPassword = models.BooleanField(default=True)
+    banned = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Chatter"
         verbose_name_plural = "Chatters"
 
     def __str__(self):
-        return discord_username
+        return self.discord_username

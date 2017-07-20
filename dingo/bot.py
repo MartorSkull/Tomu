@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 from discord.ext import commands
 from django.conf import settings
+from .models import *
+from django.contrib.auth.models import User
 import discord
 import asyncio
 import os
@@ -37,23 +39,23 @@ class DingoB(commands.Bot):
   
         self.all_ready = False
 
-        #serching for the addons
-        addons=[]
+        #serching for the plugins
+        plugins=[]
 
         for i in settings.INSTALLED_APPS:
             check = importlib.util.find_spec(".{}".format(self.commodule), package=i)
             if check is not None:
-                addons.append("{}.{}".format(i, self.commodule))
+                plugins.append("{}.{}".format(i, self.commodule))
 
-        self.failed_addons = []
+        self.failedplugins = []
 
-        #loading the addons
-        for addon in addons:
+        #loading the plugins
+        for plugin in plugins:
             try:
-                self.load_extension(addon)
+                self.load_extension(plugin)
             except Exception as e:
-                print('Error on {}:\n {}: {}'.format(addon, type(e).__name__, e))
-                self.failed_addons.append([addon, type(e).__name__, e])
+                print('Error on {}:\n {}: {}'.format(plugin, type(e).__name__, e))
+                self.failedplugins.append([plugin, type(e).__name__, e])
 
 
     async def on_command_error(self, error, context):
@@ -76,8 +78,8 @@ class DingoB(commands.Bot):
         if self.all_ready:
             return
 
-        print("{} is working".format(os.getpid()))
-        #print self.bot info
+        #print("{} is working".format(os.getpid()))
+        #print bot info
         print("-------")
         print("Logged: "+ str(self.is_logged_in))
         print("UserName: "+self.user.name)
@@ -89,15 +91,13 @@ class DingoB(commands.Bot):
         for server in self.servers:
             self.server = server
 
-        self.myself = discord.utils.get(server.members, name=self.user.name)
-
         #create the defult roles
-        br = discord.utils.get(self.myself.roles, name=self.botrole)
+        br = discord.utils.get(server.me.roles, name=self.botrole)
         if br:
             self.botrole = br
         else:
             self.botrole = await self.create_role(server, name=self.botrole, permissions=discord.Permissions().all(), colour=self.botcolor, hoist=True, mentionable=False)
-            await self.add_roles(self.myself, self.botrole)
+            await self.add_roles(self.user, self.botrole)
 
         ar = discord.utils.get(server.roles, name=self.adminrole)
         if ar:
@@ -136,11 +136,13 @@ class DingoB(commands.Bot):
         self.all_ready=True
 
         msg=""
-        if len(self.failed_addons) != 0:
+        if len(self.failedplugins) != 0:
             msg += "\n\nFailed to load:\n"
-            for f in self.failed_addons:
+            for f in self.failedplugins:
                 msg += "\n{}: `{}: {}`".format(*f)
             await self.send_message(self.output, msg)
+
+        await self.send_message(self.output, "{} is back".format(self.user.name))
 
 
     def begin(self):
@@ -149,6 +151,8 @@ class DingoB(commands.Bot):
             return
         lock = open('lock', 'w')
         self.run(self.config['main']['token'])
+
+
 
 @atexit.register
 def close():
