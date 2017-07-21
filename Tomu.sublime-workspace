@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"cho",
+				"choice_wp_id"
+			],
+			[
+				"plug",
+				"plugin"
+			],
+			[
+				"user",
+				"username"
+			],
+			[
+				"model",
+				"Model"
+			],
+			[
+				"discord",
+				"discord_id"
+			],
+			[
 				"Mode",
 				"Models"
 			],
@@ -31,7 +51,7 @@
 			"file": "dingo/apps.py",
 			"settings":
 			{
-				"buffer_size": 532,
+				"buffer_size": 438,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -40,25 +60,34 @@
 			"file": "dingo/bot.py",
 			"settings":
 			{
-				"buffer_size": 6996,
+				"buffer_size": 6799,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "dingo/models.py",
+			"file": "polls/intecheck.py",
 			"settings":
 			{
-				"buffer_size": 495,
+				"buffer_size": 649,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "dingo/botcom.py",
+			"file": "polls/botcom.py",
 			"settings":
 			{
-				"buffer_size": 526,
+				"buffer_size": 1150,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/martin/database/EJ_2_2_Montane.md",
+			"settings":
+			{
+				"buffer_size": 9163,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -71,10 +100,30 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 132.0,
-		"last_filter": "git new",
+		"height": 52.0,
+		"last_filter": "git merge",
 		"selected_items":
 		[
+			[
+				"git merge",
+				"Git: Merge Branch"
+			],
+			[
+				"git push",
+				"Git: Push Current Branch"
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add All"
+			],
+			[
+				"git comm",
+				"Git: Commit"
+			],
 			[
 				"git new",
 				"Git: New Branch"
@@ -84,24 +133,12 @@
 				"Git: Push"
 			],
 			[
-				"git comm",
-				"Git: Commit"
-			],
-			[
 				"git status",
 				"Git: Status"
 			],
 			[
-				"git push",
-				"Git: Push"
-			],
-			[
 				"git pus",
 				"Git: Push"
-			],
-			[
-				"git add",
-				"Git: Add..."
 			],
 			[
 				"git",
@@ -162,10 +199,15 @@
 	"expanded_folders":
 	[
 		"/home/martin/python/Tomu",
-		"/home/martin/python/Tomu/dingo"
+		"/home/martin/python/Tomu/polls"
 	],
 	"file_history":
 	[
+		"/home/martin/python/Tomu/.gitignore",
+		"/home/martin/python/Tomu/dingo/botcom.py",
+		"/home/martin/python/Tomu/dingo/plugins/blockedcomms.py",
+		"/home/martin/python/Tomu/dingo/models.py",
+		"/home/martin/python/Tomu/dingo/__init__.py",
 		"/home/martin/database/EJ_2_2_Montane.md",
 		"/home/martin/.devkitPro/examples/3ds/templates/library/source/templatelib.c",
 		"/home/martin/python/Tomu/dingo/bot/bot.py",
@@ -173,15 +215,12 @@
 		"/home/martin/python/Tomu/dingo/apps.py",
 		"/home/martin/python/Tomu/config/settings.py",
 		"/home/martin/python/Tomu/dingo/bot/__init__.py",
-		"/home/martin/python/Tomu/dingo/models.py",
-		"/home/martin/python/Tomu/dingo/botcom.py",
 		"/home/martin/.config/sublime-text-3/Packages/User/Markdown.sublime-settings",
 		"/home/martin/.config/sublime-text-3/Packages/MarkdownEditing/Markdown.sublime-settings",
 		"/home/martin/database/EJ_2_2_Montane.MD",
 		"/home/martin/python/Tomu/config/urls.py",
 		"/home/martin/python/Tomu/config/wsgi.py",
 		"/home/martin/python/Tomu/dingo/bot/config_example.py",
-		"/home/martin/python/Tomu/.gitignore",
 		"/home/martin/python/Tomu/README.md",
 		"/home/martin/python/Tomu/polls/models.py",
 		"/home/martin/python/Tomu/polls/botcom.py",
@@ -208,6 +247,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"models",
 			"Chatter",
 			"self.myself",
 			"BOTCONFIG",
@@ -229,7 +269,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -238,15 +278,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 532,
+						"buffer_size": 438,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								516,
-								399
+								169,
+								169
 							]
 						],
 						"settings":
@@ -259,7 +299,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -268,15 +308,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6996,
+						"buffer_size": 6799,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6147,
-								6147
+								6200,
+								6200
 							]
 						],
 						"settings":
@@ -286,32 +326,34 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1642.0,
+						"translation.y": 84.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "dingo/models.py",
+					"file": "polls/intecheck.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 495,
+						"buffer_size": 649,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								463,
-								463
+								649,
+								649
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -322,30 +364,62 @@
 				},
 				{
 					"buffer": 3,
-					"file": "dingo/botcom.py",
+					"file": "polls/botcom.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 526,
+						"buffer_size": 1150,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								122,
-								122
+								1103,
+								1103
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/martin/database/EJ_2_2_Montane.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9163,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9163,
+								9163
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/MarkdownEditing/Markdown.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4236.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

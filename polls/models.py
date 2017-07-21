@@ -44,6 +44,9 @@ class Vote(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     choice = models.ForeignKey(Choice)
 
+    def poll(self):
+        return self.choice.poll
+
     class Meta:
         verbose_name = "Vote"
         verbose_name_plural = "Votes"

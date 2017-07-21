@@ -20,9 +20,18 @@ class testCommands:
 
     @commands.command(pass_context=True)
     async def register(self, ctx):
+        check = Chatter.objects.filter(discord_id=ctx.message.author.id).first()
+        if check:
+            await self.bot.send_message(ctx.message.author, "This discord account has already a username linked to it")
+            return
+        del check
         counter = 0
         await self.bot.send_message(ctx.message.author, "Please send a message with your username in the website")
         username = await self.bot.wait_for_message(author=ctx.message.author)
+        check = Chatter.objects.filter(user__username=username.content).first()
+        if check:
+            await self.bot.send_message(ctx.message.author, "This account has already been linked to another discord account")
+            return
         await self.bot.send_message(ctx.message.author, "Please send the password.")
         password = await self.bot.wait_for_message(author=ctx.message.author)
         user = authenticate(username=username.content, password=password.content)

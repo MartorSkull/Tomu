@@ -55,6 +55,7 @@ class DingoB(commands.Bot):
                 self.load_extension(plugin)
             except Exception as e:
                 print('Error on {}:\n {}: {}'.format(plugin, type(e).__name__, e))
+                traceback.print_exc()
                 self.failedplugins.append([plugin, type(e).__name__, e])
 
 
