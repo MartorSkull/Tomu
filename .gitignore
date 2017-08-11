@@ -104,3 +104,5 @@ ENV/
 # personal
 tomu/bot/config.py
 backlog
+.sublime-project
+.sublime-workspace

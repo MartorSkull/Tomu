@@ -4,6 +4,38 @@
 		"selected_items":
 		[
 			[
+				"bot",
+				"botThread"
+			],
+			[
+				"default",
+				"default_role"
+			],
+			[
+				"ove",
+				"overwrites"
+			],
+			[
+				"con",
+				"content"
+			],
+			[
+				"send",
+				"send_message"
+			],
+			[
+				"choi",
+				"choice_wt_poll"
+			],
+			[
+				"poll",
+				"poll_id"
+			],
+			[
+				"auth",
+				"author"
+			],
+			[
 				"cho",
 				"choice_wp_id"
 			],
@@ -52,7 +84,6 @@
 			"settings":
 			{
 				"buffer_size": 438,
-				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -60,34 +91,36 @@
 			"file": "dingo/bot.py",
 			"settings":
 			{
-				"buffer_size": 6799,
+				"buffer_size": 6837,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "polls/intecheck.py",
+			"contents": "from django.contrib.auth.models import AnonymousUser, User\nfrom discord.ext import commands\nfrom dingo.models import Chatter\nfrom dingo.utils.utils import *\nfrom polls.models import *\nfrom .intecheck import *\n\nclass Polls:\n    def __init__(self, bot):\n        self.bot = bot\n\n    @commands.command(pass_context=True)\n    #@require_login()\n    async def yesno(self, ctx, title: str, workhours=6):\n        usr = Chatter.objects.filter(discord_id=ctx.message.author.id).first()\n        if usr:\n            poll = create_poll(title=title, \n                workhours=workhours, \n                choices=[\"Yes\", \"No\"], \n                user=usr.user)\n            if poll:\n                msg = \"Poll created:\\n\\t* To vote use this command !yes {0} or !no {0}\".format(poll.id)\n            else:\n                msg = \"Please input a Title bigger than 3 characters and make sure that the closetime isn't negative\"\n        else:\n            msg = \"You have to register to use commands. Use the {}register command\".format(self.bot.command_prefix[0])\n\n        await self.bot.say(msg)\n\n    @commands.command(pass_context=True)\n    async def yes(self, ctx, poll_id):\n        usr = Chatter.objects.filter(discord_id=ctx.message.author.id).first()\n        msg = self.voteWrapp(poll_id, 0, usr, True)\n        await self.bot.say(msg)\n\n    @commands.command(pass_context=True)\n    async def no(self, ctx, poll_id):\n        usr = Chatter.objects.filter(discord_id=ctx.message.author.id).first()\n        msg = self.voteWrapp(poll_id, 1, usr, True)\n        await self.bot.say(msg)\n\n    def voteWrapp(self, poll_id, choice_wt_poll, chatter, yesno: bool):\n        if chatter:\n            new = vote(poll_id, choice_wt_poll, chatter.user)\n            if new:\n                msg = \"Saved {}\".format(new.choice.choice)\n            else:\n                msg = \"Check the poll's id\"\n                if not yesno:\n                    msg += \" and the choice's id\"\n        else:\n            msg = \"You have to register to use commands. Use the {}register command\".format(self.bot.command_prefix[0])\n\n        return msg\n\n\ndef setup(bot):\n    bot.add_cog(Polls(bot))",
+			"file": "polls/utils/botcom.py",
+			"file_size": 2135,
+			"file_write_time": 131463347400564967,
 			"settings":
 			{
-				"buffer_size": 649,
+				"buffer_size": 2135,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/settings.py",
+			"settings":
+			{
+				"buffer_size": 4015,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "polls/botcom.py",
+			"file": "config/local_settings.py",
 			"settings":
 			{
-				"buffer_size": 1150,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/martin/database/EJ_2_2_Montane.md",
-			"settings":
-			{
-				"buffer_size": 9163,
+				"buffer_size": 133,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -100,20 +133,40 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 52.0,
-		"last_filter": "git merge",
+		"height": 392.0,
+		"last_filter": "",
 		"selected_items":
 		[
 			[
-				"git merge",
+				"git stat",
+				"Git: Status"
+			],
+			[
+				"git sta",
+				"Git: Status"
+			],
+			[
+				"git mer",
 				"Git: Merge Branch"
 			],
 			[
-				"git push",
-				"Git: Push Current Branch"
+				"git cha",
+				"Git: Change Branch"
 			],
 			[
-				"git commit",
+				"git comm",
+				"Git: Commit"
+			],
+			[
+				"git bra",
+				"Git: New Branch"
+			],
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git co",
 				"Git: Commit"
 			],
 			[
@@ -121,12 +174,24 @@
 				"Git: Add All"
 			],
 			[
-				"git comm",
-				"Git: Commit"
+				"python",
+				"Set Syntax: Python (Django)"
+			],
+			[
+				"git comme",
+				"Set Syntax: Git Commit Message"
 			],
 			[
 				"git new",
 				"Git: New Branch"
+			],
+			[
+				"git merge",
+				"Git: Merge Branch"
+			],
+			[
+				"git commit",
+				"Git: Commit"
 			],
 			[
 				"gitpush",
@@ -155,10 +220,6 @@
 			[
 				"rem",
 				"Package Control: Remove Package"
-			],
-			[
-				"git stat",
-				"Git: Status"
 			],
 			[
 				"list",
@@ -198,34 +259,49 @@
 	},
 	"expanded_folders":
 	[
-		"/home/martin/python/Tomu",
-		"/home/martin/python/Tomu/polls"
+		"/home/martin/python/Tomu/config"
 	],
 	"file_history":
 	[
+		"/home/martin/Documents/Economia/Economia.md",
+		"/home/martin/python/Tomu/config/settings.py",
+		"/home/martin/python/Tomu/dingo/utils/utils.py",
+		"/home/martin/python/Tomu/polls/utils/botcom.py",
+		"/home/martin/python/Tomu/manage.py",
 		"/home/martin/python/Tomu/.gitignore",
+		"/home/martin/.config/sublime-text-3/Packages/User/MarkdownTOC.sublime-settings",
+		"/home/martin/.config/sublime-text-3/Packages/MarkdownTOC/MarkdownTOC.sublime-settings",
+		"/home/martin/3ds-C/theuselestprogram/source/main.c",
+		"/home/martin/database/EJ_2_2_Montane.md",
+		"/home/martin/.devkitPro/examples/3ds/sdmc/source/main.c",
+		"/home/martin/python/Tomu/polls/utils/intecheck.py",
+		"/home/martin/python/Tomu/dingo/utils/__init__.py",
+		"/home/martin/python/Tomu/dingo/utils/botcom.py",
+		"/home/martin/python/Tomu/dingo/bot.py",
+		"/home/martin/Documents/Economia/Economia",
+		"/home/martin/Desktop/answer.md",
+		"/home/martin/python/Tomu/dingo/apps.py",
+		"/home/martin/python/Tomu/req.txt",
+		"/home/martin/python/Tomu/polls/botcom.py",
+		"/home/martin/python/Tomu/polls/urls.py",
+		"/home/martin/python/Tomu/config/urls.py",
+		"/home/martin/python/Tomu/polls/utils/__init__.py",
+		"/home/martin/python/Tomu/polls/intecheck.py",
 		"/home/martin/python/Tomu/dingo/botcom.py",
+		"/home/martin/python/Tomu/polls/models.py",
 		"/home/martin/python/Tomu/dingo/plugins/blockedcomms.py",
 		"/home/martin/python/Tomu/dingo/models.py",
 		"/home/martin/python/Tomu/dingo/__init__.py",
-		"/home/martin/database/EJ_2_2_Montane.md",
 		"/home/martin/.devkitPro/examples/3ds/templates/library/source/templatelib.c",
 		"/home/martin/python/Tomu/dingo/bot/bot.py",
-		"/home/martin/python/Tomu/polls/intecheck.py",
-		"/home/martin/python/Tomu/dingo/apps.py",
-		"/home/martin/python/Tomu/config/settings.py",
 		"/home/martin/python/Tomu/dingo/bot/__init__.py",
 		"/home/martin/.config/sublime-text-3/Packages/User/Markdown.sublime-settings",
 		"/home/martin/.config/sublime-text-3/Packages/MarkdownEditing/Markdown.sublime-settings",
 		"/home/martin/database/EJ_2_2_Montane.MD",
-		"/home/martin/python/Tomu/config/urls.py",
 		"/home/martin/python/Tomu/config/wsgi.py",
 		"/home/martin/python/Tomu/dingo/bot/config_example.py",
 		"/home/martin/python/Tomu/README.md",
-		"/home/martin/python/Tomu/polls/models.py",
-		"/home/martin/python/Tomu/polls/botcom.py",
 		"/home/martin/python/Tomu/static/js/functions.js",
-		"/home/martin/Documents/Economia/Economia",
 		"/home/martin/python/Tomu/templates/Base.html",
 		"/home/martin/python/Tomu/config/local_settings.py"
 	],
@@ -247,6 +323,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"loop",
+			"server",
+			"La Demanda",
+			"utils",
+			"from",
+			"print",
+			"REGEXP",
+			"urls",
 			"models",
 			"Chatter",
 			"self.myself",
@@ -269,7 +353,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -285,8 +369,8 @@
 						"selection":
 						[
 							[
-								169,
-								169
+								437,
+								437
 							]
 						],
 						"settings":
@@ -308,45 +392,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6799,
+						"buffer_size": 6837,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6200,
-								6200
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 84.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "polls/intecheck.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 649,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								649,
-								649
+								317,
+								317
 							]
 						],
 						"settings":
@@ -363,20 +417,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "polls/botcom.py",
+					"buffer": 2,
+					"file": "polls/utils/botcom.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1150,
+						"buffer_size": 2135,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1103,
-								1103
+								322,
+								322
 							]
 						],
 						"settings":
@@ -389,37 +443,66 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "/home/martin/database/EJ_2_2_Montane.md",
+					"buffer": 3,
+					"file": "config/settings.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9163,
+						"buffer_size": 4015,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9163,
-								9163
+								361,
+								361
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/MarkdownEditing/Markdown.tmLanguage",
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4236.0,
+						"translation.y": 52.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "config/local_settings.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 133,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								133,
+								133
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -486,12 +569,16 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"",
+				"~/3ds-C/theuselestprogram/theuselesprogram.sublime-workspace"
+			]
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"select_symbol":
 	{
