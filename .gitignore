@@ -102,7 +102,9 @@ ENV/
 .mypy_cache/
 
 # personal
-tomu/bot/config.py
 backlog
-.sublime-project
-.sublime-workspace
+*.sublime-project
+*.sublime-workspace
+*.sqlite3
+*.sql
+*/migrations/
