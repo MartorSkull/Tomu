@@ -43,6 +43,8 @@ class DingoB(commands.Bot):
         plugins=[]
 
         for i in settings.INSTALLED_APPS:
+            if 'django' in i:
+                continue
             check = importlib.util.find_spec(".{}".format(self.commodule), package=i)
             if check is not None:
                 plugins.append("{}.{}".format(i, self.commodule))

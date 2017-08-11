@@ -1,7 +1,7 @@
 import discord
 from django.db import IntegrityError
 from discord.ext import commands
-from .models import Chatter
+from dingo.models import Chatter
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 

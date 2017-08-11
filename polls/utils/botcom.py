@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AnonymousUser, User
 from discord.ext import commands
 from dingo.models import Chatter
-from .models import *
-from .intecheck import *
+from polls.models import *
+from polls.intecheck import *
 
 class Polls:
     def __init__(self, bot):
