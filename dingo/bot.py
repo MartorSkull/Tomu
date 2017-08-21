@@ -153,6 +153,9 @@ class DingoB(commands.Bot):
             #print("{} doesn't work".format(os.getpid()))
             return
         lock = open('lock', 'w')
+        if not os.path.isfile("spam"):
+            with open("spam", "w") as f:
+                f.write("{}")
         self.run(self.config['main']['token'])
 
 

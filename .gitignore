@@ -108,3 +108,4 @@ backlog
 *.sqlite3
 *.sql
 */migrations/
+spam
