@@ -126,15 +126,25 @@ STATICFILES_DIRS = [
 ]
 
 BOTCONFIG={
-    'main': {
-        'token': botToken, #this is the Discord Token to connect
-        'botmodule': "utils.botcom" #this is the module that the bot will search commands for in each app
-    },
     'bot':{
-        'prefixes': ["!"] #command prefixes
+        'prefixes': ["!"], #command prefixes
+        'token': botToken, #this is the Discord Token to connect
+        'botmodule': "utils.botcom", #this is the module that the bot will search commands for in each app
+        'extraCommands': "bin.extcoms" #this is the module that the bot will
     },
     'strings':{
-        'description': "Tomu - The bot with its own webpage" #bots description
+        'info': {
+            'description': "Tomu - The bot with its own webpage", #bots description
+        },
+        'errors': { #variables:
+                        #user = metions the user that called the command
+                        #command = the command name
+                        #format = the help format for the command
+            'missing-permissions': "{user} you don't have permission to use the `{command}` command",
+            'missing_argument': "{user} you are missing required arguments.\n{format}",
+            'bad_argument': "{user} you miss entered an argument in the `{command}` command.\n{format}",
+            'regular_error': "An error occured while processing the `{command}` command."
+        }
     },
     'server': {
         'announces': "announcements", #the name of the anouncements channel

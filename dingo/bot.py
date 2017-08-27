@@ -17,9 +17,9 @@ class DingoB(commands.Bot):
         self.config=settings.BOTCONFIG
 
         prefix=settings.BOTCONFIG['bot']['prefixes']
-        description = settings.BOTCONFIG["strings"]["description"]
+        self.strings = self.config['strings']
 
-        super().__init__(command_prefix=prefix, description=description)
+        super().__init__(command_prefix=prefix, description=self.strings['info']['description'])
 
         self.announcements = settings.BOTCONFIG['server']['announces'].lower()
         self.output =  settings.BOTCONFIG['server']['output'].lower()
@@ -30,7 +30,7 @@ class DingoB(commands.Bot):
         self.botcolor = discord.Colour(settings.BOTCONFIG['server']['bot-color'])
         self.admincolor = discord.Colour(settings.BOTCONFIG['server']['admin-color'])
 
-        self.commodule = settings.BOTCONFIG['main']['botmodule']
+        self.commodule = settings.BOTCONFIG['bot']['botmodule']
 
         #create the events
         self.on_ready = self.event(self.on_ready)
@@ -49,6 +49,10 @@ class DingoB(commands.Bot):
             if check is not None:
                 plugins.append("{}.{}".format(i, self.commodule))
 
+        check = importlib.util.find_spec("{}".format(self.config["bot"]["extraCommands"]))
+        if check is not None:
+            plugins.append(self.config["bot"]["extraCommands"])
+
         self.failedplugins = []
 
         #loading the plugins
@@ -62,18 +66,22 @@ class DingoB(commands.Bot):
 
 
     async def on_command_error(self, error, context):
+        formatter = commands.formatter.HelpFormatter()
+        if context.command:
+            info = {
+            "user":context.message.author.mention, 
+            "command": context.command.name, 
+            "format": formatter.format_help_for(context, context.command)[0]}
         if isinstance(error, discord.ext.commands.errors.CommandNotFound):
             pass
         elif isinstance(error, discord.ext.commands.errors.CheckFailure):
-            await self.send_message(context.message.channel, "{} you don't have permission to use this command".format(context.message.author.mention))
+            await self.send_message(context.message.channel, self.strings['errors']['missing-permissions'].format(**info))
         elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
-            formatter = commands.formatter.HelpFormatter()
-            await self.send_message(context.message.channel, "{} you are missing required arguments.\n{}".format(context.message.author.mention, formatter.format_help_for(context, context.command)[0]))
+            await self.send_message(context.message.channel, self.strings['errors']['missing_argument'].format(**info))
         elif isinstance(error, discord.ext.commands.errors.BadArgument):
-            formatter = commands.formatter.HelpFormatter()
-            await self.send_message(context.message.channel, "{} you miss entered an argument in the `{}` command.\n{}".format(context.message.author.mention, context.command.name, formatter.format_help_for(context, context.command)[0]))
+            await self.send_message(context.message.channel, self.strings['errors']['bad_argument'].format(**info))
         elif context.command:
-            await self.send_message(context.message.channel, "An error occured while processing the `{}` command.".format(context.command.name))
+            await self.send_message(context.message.channel, self.strings['errors']['regular_error'].format(**info))
             print('Ignoring exception in command {}'.format(context.command))
             traceback.print_exception(type(error), error, error.__traceback__)
 
@@ -115,12 +123,14 @@ class DingoB(commands.Bot):
             everyone_perms = discord.PermissionOverwrite(send_messages=False, send_tts_messages=False)
             my_perms = discord.PermissionOverwrite(send_messages=True, send_tts_messages=True)
 
-            await self.edit_channel_permissions(server.default_channel, server.default_role, everyone_perms)
-            await self.edit_channel_permissions(server.default_channel, self.botrole, my_perms)
-            await self.edit_channel(server.default_channel, name=self.announcements)
+            everyone = discord.ChannelPermissions(target=server.default_role, overwrite=everyone_perms)
+            mine = discord.ChannelPermissions(target=self.botrole, overwrite=my_perms)
 
-        self.announcements = server.default_channel
+            an = await self.create_channel(server, self.announcements, everyone, mine)
+
+        self.announcements = an
         await self.move_channel(self.announcements, 0)
+
             #output
         op = discord.utils.get(server.channels, name=self.output)
         if not op:
@@ -156,7 +166,7 @@ class DingoB(commands.Bot):
         if not os.path.isfile("spam"):
             with open("spam", "w") as f:
                 f.write("{}")
-        self.run(self.config['main']['token'])
+        self.run(self.config['bot']['token'])
 
 
 

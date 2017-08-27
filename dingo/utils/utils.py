@@ -19,12 +19,12 @@ def require_login():
                 else:
                     pass
             else:
-                return await self.bot.send_message(ctx.message.channel, "You have to register to use commands. Use the `{}register` command".format(self.bot.command_prefix[0]))
+                return await self.bot.send_message(ctx.message.channel, "You have to register to use some commands. Use the `{}register` command".format(self.bot.command_prefix[0]))
         return wrapped
     return wrapper
 
 
-def anti_spam(timeBetween, multiple_calls=1):
+def anti_spam(timeBetween, multiple_calls=1, until_stop_responding=5, until_blocking=None):
     def wrapper(func):
         @functools.wraps(func)
         async def wrapped(*args, **kwargs):
@@ -33,42 +33,45 @@ def anti_spam(timeBetween, multiple_calls=1):
             now = datetime.datetime.now()
             with open('spam', 'r+') as spam:
                 reg = json.load(spam)
+            dicnow={
+                "year": now.year, 
+                "month": now.month, 
+                "day": now.day, 
+                "hour": now.hour,
+                "minute": now.minute,
+                "second": now.second,
+                "microsecond": now.microsecond}
             try:
-                com = reg[ctx.message.author.id][func.__name__]
-                if com["numberOfCalls"]>=multiple_calls and now - datetime.datetime(**com["lastCall"])<=timeBetween:
-                    return await self.bot.send_message(ctx.message.channel, "Too many simultaneous calls.")
-                else:
-                    com["numberOfCalls"] += 1
-                    if com["numberOfCalls"] >= multiple_calls:
-                        com["lastCall"] = {
-                        "year": now.year, 
-                        "month": now.month, 
-                        "day": now.day, 
-                        "hour": now.hour,
-                        "minute": now.minute,
-                        "second": now.second,
-                        "microsecond": now.microsecond}
-                    elif now - datetime.datetime(**com["lastCall"]) >= timeBetween:
-                        com["numberOfCalls"] = 0
-                        com["hasBlock"] = False
+                com = reg[ctx.message.author.id][func.__name__] 
             except KeyError as e:
                 if ctx.message.author.id not in reg.keys():
                     reg[ctx.message.author.id] = {}
                 reg[ctx.message.author.id][func.__name__] = {
-                        "lastCall": {
-                            "year": now.year, 
-                            "month": now.month, 
-                            "day": now.day, 
-                            "hour": now.hour,
-                            "minute": now.minute,
-                            "second": now.second,
-                            "microsecond": now.microsecond},
-                        "numberOfCalls": 1,
+                        "lastCall": dicnow,
+                        "numberOfCalls": 0,
                         "hasBlock": False
                     }
+                com = reg[ctx.message.author.id][func.__name__] 
+
+            com["numberOfCalls"] += 1
+            lastCall=datetime.datetime(**com["lastCall"])
+            if now - lastCall >= timeBetween:
+                com["numberOfCalls"] = 0
+                com["hasBlock"] = False
+                com["lastCall"] = dicnow
+            elif com["numberOfCalls"] > multiple_calls:
+                com["lastCall"] = dicnow
 
             with open("spam", 'w') as spam:
                 spam.write(json.dumps(reg))
+
+            noc = com["numberOfCalls"]
+
+            if com["numberOfCalls"]>multiple_calls and now - datetime.datetime(**com["lastCall"])<=timeBetween:
+                if not com["numberOfCalls"]-until_stop_responding>multiple_calls:
+                    return await self.bot.send_message(ctx.message.channel, "Too many simultaneous calls.")
+                else:
+                    return
 
             return await func(*args, **kwargs)
 

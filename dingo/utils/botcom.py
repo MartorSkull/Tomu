@@ -6,22 +6,13 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from dingo.utils.utils import *
 
-class testCommands:
+class OfficialCommands:
     def __init__(self, bot):
         self.bot = bot
-
 
     @commands.command(pass_context=True)
     async def hi(self, ctx):
         await self.bot.say("hi {}, how are you?".format(ctx.message.author.mention))
-
-    @commands.command()
-    async def purpose(self):
-        await self.bot.say("I. Pass. Butter")
-
-    @commands.command(pass_context=True, hidden=True)
-    async def sendnudes(self, ctx):
-        await self.bot.say("https://www.reddit.com/r/gonewild/. You're welcome {}".format(ctx.message.author.mention))
 
     @commands.command(pass_context=True)
     async def register(self, ctx):
@@ -54,13 +45,5 @@ class testCommands:
         await self.bot.send_message(ctx.message.author, "That wasn't quite right. Try again")
 
 
-    @commands.command(pass_context=True)
-    @require_login()
-    @anti_spam(datetime.timedelta(minutes=1), 2)
-    async def test(self, ctx):
-        await self.bot.add_reaction(ctx.message, u"\u2705")
-
-
-
 def setup(bot):
-    bot.add_cog(testCommands(bot))
+    bot.add_cog(OfficialCommands(bot))

@@ -11,6 +11,7 @@ class Polls:
 
     @commands.command(pass_context=True)
     @require_login()
+    @anti_spam(datetime.timedelta(minutes=5), 2)
     async def yesno(self, ctx, title: str, workhours=6):
         usr = Chatter.objects.filter(discord_id=ctx.message.author.id).first()
         poll = create_poll(title=title, 
