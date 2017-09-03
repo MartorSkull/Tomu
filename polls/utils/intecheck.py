@@ -1,4 +1,4 @@
-from .models import *
+from polls.models import *
 from datetime import datetime, timedelta
 from django.contrib.auth.models import AnonymousUser, User
 from django.utils import timezone

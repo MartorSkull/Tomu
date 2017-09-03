@@ -109,3 +109,5 @@ backlog
 *.sql
 */migrations/
 spam
+UML/*
+lock

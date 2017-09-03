@@ -2,7 +2,7 @@ from django.contrib.auth.models import AnonymousUser, User
 from discord.ext import commands
 from dingo.models import Chatter
 from polls.models import *
-from polls.intecheck import *
+from .intecheck import *
 from dingo.utils.utils import *
 
 class Polls:
