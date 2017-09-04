@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^$', index, name="index"),
     url(r'^login/', loginv, name="login"),
     url(r'^logout/', logoutv, name="logout"),
+    url(r'^license/', license, name="license"),
     url(r'^polls/', include(polls.urls)),
 ]

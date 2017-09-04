@@ -131,7 +131,7 @@ BOTCONFIG={
         'botmodule': "botcom" #this is the module that the bot will search commands for in each app
     },
     'bot':{
-        'prefixes': ["!"] #command prefixes
+        'prefixes': ["."] #command prefixes
     },
     'strings':{
         'description': "Tomu - The bot with its own webpage" #bots description
