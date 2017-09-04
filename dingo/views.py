@@ -11,10 +11,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from datetime import datetime, timedelta
 from django.utils import timezone
+from config.settings import BOTCONFIG
 # Create your views here.
 
 def index(request):
-    return render(request, "Base.html")
+    return render(request, "index.html", {"prefix":BOTCONFIG["bot"]["prefixes"][0]})
+
+def license(request):
+    return render(request, "License.html")
 
 def loginv(request):
     if request.method != "POST":

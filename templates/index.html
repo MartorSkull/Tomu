@@ -1,0 +1,74 @@
+{% extends "Base.html" %}
+
+{% block title %}Tomu{% endblock title %}
+
+{% block imports %}
+{% load static %}
+
+{% endblock imports %}
+
+{% block bod %}
+<div class="container-index">
+	<h2>Tomu's Functions</h2>
+	<div class="row">
+
+		<div class="col s12 m12 l12">
+			<div class="card black">
+				<div class="card-content white-text">
+
+					<span class="card-title">Polls</span>
+					<div class="col s11 m11 l11">
+						<p>Make, vote and/or see the results of polls</p>
+					</div>
+					<div class="col s1 m1 l1 valign-wrapper right-align">
+						<a href="{% url 'polls' %}"><i class="material-icons white-text">data_usage</i></a>
+					</div>
+					<br>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<h2>F.A.Q.</h2>
+	<div class="row">
+		<div class="col s12 m12 l12">
+			<div class="card black">
+				<div class="card-content white-text">
+					<span class="card-title">What is Tomu?</span>
+					<div class="col">
+						<p>Tomu is a Discord + Telegram bot running in Django framework.</p>
+					</div>
+					<br>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m12 l12">
+			<div class="card black">
+				<div class="card-content white-text">
+					<span class="card-title">Who are we?</span>
+					<div class="col">
+						<p>We are 3 programming students from Instituto Técnico Salesiano Villada.</p>
+					</div>
+					<br>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m12 l12">
+			<div class="card black">
+				<div class="card-content white-text">
+					<span class="card-title">What is Tomu's purpose?</span>
+					<div class="col">
+						<p>you pass Butter. Oh...my god.</p>
+						<p><strike>(see {{prefix}}purpose)</strike></p>
+					</div>
+					<br>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+</div>
+
+{% endblock bod %}

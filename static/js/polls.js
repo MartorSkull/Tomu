@@ -1,3 +1,21 @@
+function vote(pollid){
+  //var data = new FormData($("#form-"+pollid)[0]);
+  //console.log(data);
+  var form = document.getElementById('form-'+pollid);
+  var formData = new FormData(form);
+var choice = formData.get("choice");
+  $.ajax({
+    method:"POST",
+    url: "/polls/vote/"+ choice,
+  })
+  .done(function(data){
+    
+  });
+  drawthispoll(pollid);
+  
+}
+
+
 function drawthispoll(id){
 
   $.ajax({
