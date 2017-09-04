@@ -25,10 +25,10 @@ def create_poll(title, workhours, choices, user):
 def vote(poll_id, choice_iwp, user):
     if isinstance(user, AnonymousUser):
         return False
-    poll = Poll.objects.get(pk=poll_id)
+    poll = Poll.objects.filter(pk=poll_id).first()
     if not poll or poll.closetime <= timezone.now():
         return False
-    choice = Choice.objects.get(poll=poll, idinPoll=choice_iwp)
+    choice = Choice.objects.filter(poll=poll, idinPoll=choice_iwp).first()
     if not choice:
         return False
     check = Vote.objects.filter(user=user, choice__poll=poll).first()
@@ -36,6 +36,7 @@ def vote(poll_id, choice_iwp, user):
         check.delete()
 
     vote = Vote(user=user, choice=choice)
+    print(vote)
     vote.save()
 
     return vote

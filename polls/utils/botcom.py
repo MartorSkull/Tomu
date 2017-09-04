@@ -2,7 +2,7 @@ from django.contrib.auth.models import AnonymousUser, User
 from discord.ext import commands
 from dingo.models import Chatter
 from polls.models import *
-from .intecheck import *
+from polls.utils.intecheck import *
 from dingo.utils.utils import *
 
 class Polls:
@@ -29,7 +29,7 @@ class Polls:
     @require_login()
     async def yes(self, ctx, poll_id):
         usr = Chatter.objects.filter(discord_id=ctx.message.author.id).first()
-        msg = self.voteWrapp(poll_id, 0, usr, True)
+        msg = await self.voteWrapp(poll_id, 0, usr, True)
         if msg:
             await self.bot.add_reaction(ctx.message, u"\u2705")
 
@@ -37,7 +37,7 @@ class Polls:
     @require_login()
     async def no(self, ctx, poll_id):
         usr = Chatter.objects.filter(discord_id=ctx.message.author.id).first()
-        msg = self.voteWrapp(poll_id, 1, usr, True)
+        msg = await self.voteWrapp(poll_id, 1, usr, True)
         if msg:
             await self.bot.add_reaction(ctx.message, u"\u2705")
 
