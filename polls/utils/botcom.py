@@ -2,7 +2,7 @@ from django.contrib.auth.models import AnonymousUser, User
 from discord.ext import commands
 from dingo.models import Chatter
 from polls.models import *
-from polls.utils.intecheck import *
+from polls.utils import intecheck
 from dingo.utils.utils import *
 
 class Polls:
@@ -14,7 +14,7 @@ class Polls:
     @anti_spam(datetime.timedelta(minutes=5), 2)
     async def yesno(self, ctx, title: str, workhours=6):
         usr = Chatter.objects.filter(discord_id=ctx.message.author.id).first()
-        poll = create_poll(title=title, 
+        poll = intecheck.create_poll(title=title, 
             workhours=workhours, 
             choices=["Yes", "No"], 
             user=usr.user)
@@ -42,7 +42,7 @@ class Polls:
             await self.bot.add_reaction(ctx.message, u"\u2705")
 
     async def voteWrapp(self, poll_id, choice_wt_poll, chatter, yesno: bool):
-        new = vote(poll_id, choice_wt_poll, chatter.user)
+        new = intecheck.vote(poll_id, choice_wt_poll, chatter.user)
         if new:
             flag = True
         else:

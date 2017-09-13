@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.core import serializers
 from .models import *
+from .utils import intecheck
 import datetime
 import re
 import json
@@ -36,9 +37,8 @@ def makePoll(request):
         title = request.POST['Title']
         closetime = datetime.now() + datetime.timedelta(hours=request.POST['hours'])
         answers = []
-        for a in request.POST.keys():
-            if re.search(r'^a(\d+)', a) != None:
-                answers.append(request.POST[a])
+        for a in request.POST['answers']:
+                answers.append(a)
         if len(answers) <= 1:
             return HttpResponse(status=400)
 
@@ -51,8 +51,16 @@ def makePoll(request):
         return redirect("polls")
     return redirect("polls")
 
-def vote(request, poll_id):
+def vote(request):
     if request.method == 'POST':
-        pass
-    else:
-        return HttpResponseRedirect("polls")
+        if request.user.is_authenticated:
+            try:
+                choice=Choice.objects.get(id=request.POST['choice'])
+                poll = choice.poll
+            except:
+                return HttpResponse(400)
+            voteM = intecheck.vote(poll.id, choice.idinPoll, request.user)
+            if voteM:
+                return getPoll(request, poll.id)
+            else:
+                return getPoll(getPoll, poll.id)

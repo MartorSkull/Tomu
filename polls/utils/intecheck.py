@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 from django.contrib.auth.models import AnonymousUser, User
 from django.utils import timezone
 
-
 def create_poll(title, workhours, choices, user):
     closetime=datetime.now() + timedelta(hours=workhours)
     if len(title)<3 or closetime<=datetime.now() or isinstance(user, AnonymousUser):
@@ -36,7 +35,6 @@ def vote(poll_id, choice_iwp, user):
         check.delete()
 
     vote = Vote(user=user, choice=choice)
-    print(vote)
     vote.save()
 
     return vote

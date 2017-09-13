@@ -24,7 +24,7 @@ class Poll(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 class Choice(models.Model):
     choice = models.CharField(max_length=80)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)

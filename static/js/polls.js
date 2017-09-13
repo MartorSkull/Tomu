@@ -3,16 +3,18 @@ function vote(pollid){
   //console.log(data);
   var form = document.getElementById('form-'+pollid);
   var formData = new FormData(form);
-var choice = formData.get("choice");
+  var cho = formData.get("choice");
   $.ajax({
     method:"POST",
-    url: "/polls/vote/"+ choice,
+    url: "/polls/vote/",
+    data: {
+      choice: formData.get("choice"),
+      csrfmiddlewaretoken: formData.get("csrfmiddlewaretoken")
+    }
   })
   .done(function(data){
-    
+    drawthispoll(pollid);
   });
-  drawthispoll(pollid);
-  
 }
 
 
@@ -23,25 +25,36 @@ function drawthispoll(id){
     url: "/polls/getpoll/" + id,
   })
     .done(function (info) {
-      var chart = c3.generate({
-        bindto: '#graph-'+info.id,
-        data: {
-          columns: info.columns,
-          type: "pie"
-        },
-        size:{
-          height: 200,
-          width: 200
-        }
-      });
+
+      var data = new google.visualization.DataTable();
+
+      data.addColumn('string', 'Choice');
+      data.addColumn('number', 'Votes');
+
+      data.addRows(info.columns);
+
+      var options = {
+        backgroundColor: "#000000",
+        legend: {
+          position: 'bottom', 
+          textStyle: {
+            color: 'white'}},
+      }
+
+      var chart = new google.visualization.PieChart($('#graph-'+info.id)[0]);
+      chart.draw(data, options);
+
+      
     });
 }
 
 //drawthispoll(
 //{
-//    "choices":["hola", "chau"],
-//    "votes":[5,8],
-//    "items":2
+//    pollid: 1,
+//    "choices":[["hola", 5],["chau", 8]],
 //    }, );
 //
 
+$(document).ready(function(){
+  google.charts.load('current', {packages: ['corechart']});
+});
