@@ -56,4 +56,29 @@
 		{% endfor %}
 	</div>
 </div>
+ <div class="fixed-action-btn">
+    <a class="btn-floating btn-large grey darken-4"  href="#modal1">
+      <i class="large material-icons" >add</i>
+    </a>
+  </div>
+
+ <!-- Modal Trigger -->
+ 
+ <div id="modal1" class="modal grey darken-4 white-text">
+ 	<div class="modal-content">
+ 		<h4>Make a new Poll</h4>
+ 		<form>
+ 			<div class="input-field col s12 ">
+ 				<input placeholder="Poll name" type="text" >
+ 			</div>
+ 			<div id= "newpoll">
+ 				<h4>Add choices</h4>
+ 				<input placeholder="Choice 1" type="text" id="choice1">
+ 			</div>
+ 	</form>
+ </div>
+ <div class="modal-footer grey darken-4 white-text" >
+ 	<a href="" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="addPoll()">Confirm</a>
+ </div>
+</div>
 {% endblock bod %}

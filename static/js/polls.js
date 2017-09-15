@@ -44,4 +44,20 @@ function drawthispoll(id){
 //    "items":2
 //    }, );
 //
+var count = 1;
+$(document).ready(function(){
+  document.getElementById("choice"+count).addEventListener("input", addChoice);
+  
+});
 
+function addChoice(){
+    var btn = document.createElement("INPUT");
+    count += 1;
+    btn.placeholder="Choice "+count;
+    btn.id="choice"+count
+    btn.addEventListener("input", addChoice)
+    document.getElementById("newpoll").appendChild(btn);
+    document.getElementById("choice"+(count-1)).removeEventListener("input",addChoice)
+   
+
+};
