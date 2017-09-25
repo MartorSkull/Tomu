@@ -4,11 +4,6 @@
 
 {% block imports %}
 {% load static %}
-<!-- Load c3.css -->
-<link href="{% static "css/c3.min.css" %}" rel="stylesheet">
-
-<!-- Load d3.js and c3.js -->
-<script src="https://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="{% static "js/polls.js" %}"></script>
 {% endblock imports %}
@@ -37,12 +32,8 @@
 								<label for="{{ choice.id }}">{{choice.choice}}</label>
 							</p>
 							{% endfor %}
-						
-						
 					</div>
-					
 				</div>
-				
 				</form>
 				<div class="card-image valign-wrapper" id="graph-{{ poll.id }}">
 				<a class="btn waves-effect waves-light black valign" onclick="vote({{poll.id}})">Vote
@@ -55,5 +46,14 @@
 
 		{% endfor %}
 	</div>
+</div>
+<div id="errmodal" class="modal">
+    <div class="modal-content">
+      <h4 id="error-title">Error</h4>
+      <p id="error-desc"></p>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+    </div>
 </div>
 {% endblock bod %}

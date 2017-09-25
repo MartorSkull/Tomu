@@ -28,6 +28,7 @@ def getPoll(request, id):
     data = {
         "id": poll.id,
         "columns": [[x.choice, x.voted()] for x in poll.allChoices()],
+        "code": 0,
     }
 
     return HttpResponse(json.dumps(data), content_type='application/json')
@@ -59,8 +60,12 @@ def vote(request):
                 poll = choice.poll
             except:
                 return HttpResponse(400)
-            voteM = intecheck.vote(poll.id, choice.idinPoll, request.user)
-            if voteM:
+            code, voto = intecheck.vote(poll.id, choice.idinPoll, request.user)
+            print(code)
+            if code == 0:
+                print("dio bien")
                 return getPoll(request, poll.id)
             else:
-                return getPoll(getPoll, poll.id)
+                print("returned bad")
+                data = {"code": code}
+                return HttpResponse(json.dumps(data), content_type='application/json')

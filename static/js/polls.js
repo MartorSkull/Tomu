@@ -13,11 +13,43 @@ function vote(pollid){
     }
   })
   .done(function(data){
-    drawthispoll(pollid);
+    res = readResult(data["code"])
+    errTitle = $("#error-title")[0]
+    errDesc = $("#error-desc")[0]
+    switch(res[0]){
+      case "0":
+        drawthispoll(pollid);
+        break;
+      case "8":
+        switch(res[1]){
+          case 1:
+            errTitle.innerHTML = "Please Sign-in or Sign-up"
+            errDesc.innerHTML = "To vote you must be registered and loged"
+            break;
+          case 2:
+            errTitle.innerHTML = "This poll is closed"
+            errDesc.innerHTML = "You can't vote in this poll anymore"
+            break;
+          case 3:
+            errTitle.innerHTML = "Choice not found"
+            errDesc.innerHTML = "The choice you voted for doesn't exist"
+            break;
+          case 4:
+            errTitle.innerHTML = "Server Error"
+            errDesc.innerHTML = "Please contact an administrator"
+            break;
+        }
+        $('#errmodal').modal('open'); 
+        break;
+    }
   });
 }
 
-
+function readResult(res){
+    status = parseInt(res & 8)
+    desc = parseInt(res & 7)
+    return [status, desc]
+}
 function drawthispoll(id){
 
   $.ajax({
@@ -57,4 +89,5 @@ function drawthispoll(id){
 
 $(document).ready(function(){
   google.charts.load('current', {packages: ['corechart']});
+    $('#errmodal').modal();
 });
