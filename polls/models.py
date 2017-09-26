@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from datetime import datetime
+from django.utils import timezone
 # Create your models here.
 
 class Poll(models.Model):
@@ -16,7 +16,7 @@ class Poll(models.Model):
         return Choice.objects.filter(poll=self).count()
 
     def closed(self):
-        return closetime<=datetime.now()
+        return self.closetime<=timezone.now()
 
     class Meta:
         verbose_name = "poll"

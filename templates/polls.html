@@ -28,7 +28,7 @@
 							{% csrf_token %}
 							{% for choice in poll.allChoices %}
 							<p>
-								<input name="choice" class="black" type="radio" id="{{choice.id}}" value="{{choice.id}}" />
+								<input name="choice" class="" type="radio" id="{{choice.id}}" value="{{choice.id}}" {% if poll.closed %} disabled="disabled"{% endif %}/>
 								<label for="{{ choice.id }}">{{choice.choice}}</label>
 							</p>
 							{% endfor %}
@@ -36,11 +36,10 @@
 				</div>
 				</form>
 				<div class="card-image valign-wrapper" id="graph-{{ poll.id }}">
-				<a class="btn waves-effect waves-light black valign" onclick="vote({{poll.id}})">Vote
-							<i class="material-icons right valign">send</i>
-				</a>
-							<!--<button onclick="drawthispoll({{ poll.id }})">View Results</button>-->
-					</div>
+					<a class="btn waves-effect waves-light black valign" onclick="vote({{poll.id}})">{% if not poll.closed %}Vote 
+								<i class="material-icons right valign">send</i>{% else %} View Results {% endif %}
+					</a>
+				</div>
 			</div>
 		</div>
 

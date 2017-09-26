@@ -7,8 +7,6 @@ from enum import IntEnum
 
 def createResult(status, description):
     res = (status.value << 3) | description.value
-    print("stat {}".format(status.value))
-    print("{0:b}".format(res))
     return res
 
 def readResult(res):

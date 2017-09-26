@@ -61,11 +61,8 @@ def vote(request):
             except:
                 return HttpResponse(400)
             code, voto = intecheck.vote(poll.id, choice.idinPoll, request.user)
-            print(code)
             if code == 0:
-                print("dio bien")
                 return getPoll(request, poll.id)
             else:
-                print("returned bad")
                 data = {"code": code}
                 return HttpResponse(json.dumps(data), content_type='application/json')
