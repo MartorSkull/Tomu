@@ -24,7 +24,7 @@ function vote(pollid){
     errDesc = $("#error-desc")[0]
     switch(res[0]){
       case "0":
-        drawthispoll(pollid);
+        drawpoll(pollid);
         break;
       case "8":
         switch(res[1]){
@@ -51,12 +51,9 @@ function vote(pollid){
   });
 }
 
-function readResult(res){
-    status = parseInt(res & 8)
-    desc = parseInt(res & 7)
-    return [status, desc]
-}
-function drawthispoll(id){
+function drawpoll(){
+
+  var id = window.location.pathname.split("s/")[1];
 
   $.ajax({
     method: "GET",
@@ -77,27 +74,20 @@ function drawthispoll(id){
           trigger: 'none'
         },
         legend: {
-          position: 'bottom', 
+          position: 'right', 
           textStyle: {
             color: 'white'}},
       }
 
-      var chart = new google.visualization.PieChart($('#graph-'+info.id)[0]);
+      var chart = new google.visualization.PieChart($('#graph')[0]);
       chart.draw(data, options);
 
       
     });
 }
 
-//drawthispoll(
-//{
-//    pollid: 1,
-//    "choices":[["hola", 5],["chau", 8]],
-//    }, );
-//
-
 $(document).ready(function(){
-  google.charts.load('current', {packages: ['corechart']});
+  google.charts.load('current', {packages: ['corechart'], 'callback': drawpoll});
     $('#errmodal').modal();
 
 });

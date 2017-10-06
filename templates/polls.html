@@ -21,7 +21,8 @@
 			<div class="card horizontal black">
 				<div class="card-stacked">
 					<div class="cardpoll">
-						<span class="card-title">{{poll|title}}</span>
+						<a href="{% url 'poll' poll.id %}"><span class="card-title">{{poll|title}}{% if poll.closed %} <span class="grey-text">- Closed </span>{% endif %}</span><br></a>
+						<span class="grey-text by"><i>By: {{ poll.admin|title }}</i></span>
 					</div>
 					<div class="card-content" style="padding: 10px;">
 						<form action="{% url 'polls' %}" id="form-{{ poll.id }}" method="POST" accept-charset="utf-8">
@@ -36,9 +37,11 @@
 				</div>
 				</form>
 				<div class="card-image valign-wrapper" id="graph-{{ poll.id }}">
-					<a class="btn waves-effect waves-light black valign" onclick="vote({{poll.id}})">{% if not poll.closed %}Vote 
-								<i class="material-icons right valign">send</i>{% else %} View Results {% endif %}
-					</a>
+					{% if not poll.closed %}	
+					<a class="btn waves-effect waves-light black valign" onclick="vote({{poll.id}})">Vote <i class="material-icons right valign">send</i></a>
+					{% else %}
+					<a class="btn waves-effect waves-light black valign" onclick="drawthispoll({{poll.id}})">View Results</a>
+					{% endif %}
 				</div>
 			</div>
 		</div>

@@ -10,7 +10,7 @@ def createResult(status, description):
     return res
 
 def readResult(res):
-    status = StatusVotes(res & 8)
+    status = StatusVotes(res & 8 >> 3)
     desc = Descriptions(res & 7)
     return status, desc
 
@@ -45,7 +45,7 @@ def create_poll(title, workhours, choices, user):
     return poll
 
 def vote(poll_id, choice_iwp, user):
-    if isinstance(user, AnonymousUser):
+    if not user.is_authenticated:
         return createResult(StatusVotes.BAD, Descriptions.NotLogged), None
     poll = Poll.objects.filter(pk=poll_id).first()
     if not poll or poll.closetime <= timezone.now():

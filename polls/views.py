@@ -23,6 +23,13 @@ def polls(request):
     polls=Poll.objects.all().order_by("-created")
     return render(request, "polls.html", {"polls": polls})
 
+def poll(request, id):
+    try:
+        poll = Poll.objects.get(pk=id)
+    except Exception:
+        return redirect('polls')
+    return render(request, "poll.html", {"poll": poll})
+
 def getPoll(request, id):
     poll = Poll.objects.filter(id=id).first()
     data = {
@@ -54,15 +61,14 @@ def makePoll(request):
 
 def vote(request):
     if request.method == 'POST':
-        if request.user.is_authenticated:
-            try:
-                choice=Choice.objects.get(id=request.POST['choice'])
-                poll = choice.poll
-            except:
-                return HttpResponse(400)
-            code, voto = intecheck.vote(poll.id, choice.idinPoll, request.user)
-            if code == 0:
-                return getPoll(request, poll.id)
-            else:
-                data = {"code": code}
-                return HttpResponse(json.dumps(data), content_type='application/json')
+        try:
+            choice=Choice.objects.get(id=request.POST['choice'])
+            poll = choice.poll
+        except:
+            return HttpResponse(404)
+        code, voto = intecheck.vote(poll.id, choice.idinPoll, request.user)
+        if code == 0:
+            return getPoll(request, poll.id)
+        else:
+            data = {"code": code}
+            return HttpResponse(json.dumps(data), content_type='application/json')

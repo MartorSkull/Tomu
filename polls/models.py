@@ -9,6 +9,11 @@ class Poll(models.Model):
     closetime = models.DateTimeField()
     admin = models.ForeignKey(settings.AUTH_USER_MODEL)
 
+    def orderedChoices(self):
+        qs = Choice.objects.filter(poll=self).all()
+        sorted_results = sorted(qs, key= lambda t: t.voted(), reverse=True)
+        return sorted_results
+
     def allChoices(self):
         return Choice.objects.filter(poll=self)
 
@@ -17,6 +22,9 @@ class Poll(models.Model):
 
     def closed(self):
         return self.closetime<=timezone.now()
+
+    def hasVoted(self, user):
+        return Vote.objects.filter(user=user, choice__poll=self) != None
 
     class Meta:
         verbose_name = "poll"
