@@ -95,9 +95,67 @@ function drawthispoll(id){
 //    "choices":[["hola", 5],["chau", 8]],
 //    }, );
 //
+var count = 1;
+$(document).ready(function(){
+  document.getElementById("choice"+count).addEventListener("input", addChoice);
+  document.getElementById("confirm_poll").addEventListener("click", addPoll);
+  
+});
+
+function addChoice(){
+    var btn = document.createElement("INPUT");
+    count += 1;
+    btn.placeholder="Choice "+count;
+    btn.id="choice"+count
+    btn.name="choice"+count
+    btn.addEventListener("input", addChoice)
+    document.getElementById("newpoll").appendChild(btn);
+    document.getElementById("choice"+(count-1)).removeEventListener("input",addChoice)
+   
+};
+
+function addPoll(){
+
+  var form = document.getElementById('create_poll');
+  var formData = new FormData(form);
+  var title = formData.get("polltitle")
+  var workhours = formData.get("workhours")
+  var choices = []
+    for (var i=0;i<count;i++){
+      choices[i] = formData.get("choice"+(i+1))
+    }
+  $.ajax({
+    method:"POST",
+    url: "/polls/new/",
+    data: {"Title":title,"hours":workhours,"answers":choices,"csrfmiddlewaretoken":formData.get("csrfmiddlewaretoken")}
+  })
+  .done(function(data){
+    window.location.reload()
+  });
+}
+//function addPoll(){
+//  var title = document.getElementById("polltitle").value
+//  var workhours = document.getElementById("workhours").value
+// var choices = []
+//    for (var i=0;i<count;i++){
+//      choices[i] = document.getElementById("choice"+(i+1)).value
+//     }
+//   console.log(title)
+//   console.log(workhours)
+//   console.log(choices)
+//   $.ajax({
+//     method:"POST",
+//     url: "/polls/new/",
+//     data: {}
+//   })
+//   .done(function(data){
+    
+//   });
+// }
 
 $(document).ready(function(){
   google.charts.load('current', {packages: ['corechart']});
     $('#errmodal').modal();
 
 });
+
