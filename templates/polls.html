@@ -63,11 +63,11 @@
  		<form id="create_poll">
  			{% csrf_token %}
  			<div class="input-field col s12 ">
- 				<input id="polltitle" placeholder="Poll name" type="text" >
+ 				<input id="polltitle" name="polltitle" placeholder="Poll name" type="text" >
  			</div>
  			<div id= "newpoll">
  				<h4>Hours until close</h4>
- 				<input placeholder="Default: 6" type="number" id="workhours">
+ 				<input placeholder="Default: 6" type="number" name="workhours" id="workhours">
  				<h4>Add choices</h4>
  				<input placeholder="Choice 1" name="choice1" type="text" id="choice1">
  			</div>
@@ -76,6 +76,7 @@
  <div class="modal-footer grey darken-4 white-text" >
  	<a id = "confirm_poll" class="modal-action modal-close waves-effect waves-green btn-flat">Confirm</a>
  </div>
+</div>
 <div id="errmodal" class="modal">
     <div class="modal-content">
       <h4 id="error-title">Error</h4>

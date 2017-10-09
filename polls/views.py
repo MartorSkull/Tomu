@@ -42,21 +42,18 @@ def getPoll(request, id):
 
 def makePoll(request):
     if request.method == 'POST':
+        print(request.POST)
         title = request.POST['Title']
-        closetime = datetime.now() + datetime.timedelta(hours=request.POST['hours'])
+        workhours = request.POST['hours']
         answers = []
-        for a in request.POST['answers']:
-                answers.append(a)
-        if len(answers) <= 1:
-            return HttpResponse(status=400)
+        answers = request.POST.getlist('choices[]'):
 
-        poll = Poll(name=title, closetime=closetime, admin=request.user)
-        poll.save()
-        for i in range(len(answers)):
-            choice = Choice(choice=answers[i], poll=poll, idinPoll=i)
-            choice.save()
+        poll = intecheck.create_poll(title=title, workhours=workhours, choices=answers, user=request.user)
 
-        return redirect("polls")
+        data = {"code": 1}
+
+        return HttpResponse(json.dumps(data), content_type='application/json')
+
     return redirect("polls")
 
 def vote(request):
