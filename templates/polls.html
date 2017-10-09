@@ -67,18 +67,21 @@
  <div id="modal1" class="modal grey darken-4 white-text">
  	<div class="modal-content">
  		<h4>Make a new Poll</h4>
- 		<form>
+ 		<form id="create_poll">
+ 			{% csrf_token %}
  			<div class="input-field col s12 ">
- 				<input placeholder="Poll name" type="text" >
+ 				<input id="polltitle" placeholder="Poll name" type="text" >
  			</div>
  			<div id= "newpoll">
+ 				<h4>Hours until close</h4>
+ 				<input placeholder="Default: 6" type="number" id="workhours">
  				<h4>Add choices</h4>
- 				<input placeholder="Choice 1" type="text" id="choice1">
+ 				<input placeholder="Choice 1" name="choice1" type="text" id="choice1">
  			</div>
  	</form>
  </div>
  <div class="modal-footer grey darken-4 white-text" >
- 	<a href="" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="addPoll()">Confirm</a>
+ 	<a id = "confirm_poll" class="modal-action modal-close waves-effect waves-green btn-flat">Confirm</a>
  </div>
 </div>
 {% endblock bod %}
