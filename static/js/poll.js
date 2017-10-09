@@ -24,9 +24,9 @@ function vote(pollid){
     errDesc = $("#error-desc")[0]
     switch(res[0]){
       case "0":
-        drawpoll(pollid);
+        drawpoll();
         break;
-      case "8":
+      case "1":
         switch(res[1]){
           case 1:
             errTitle.innerHTML = "Please Sign-in or Sign-up"

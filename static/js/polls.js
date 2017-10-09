@@ -26,7 +26,7 @@ function vote(pollid){
       case "0":
         drawthispoll(pollid);
         break;
-      case "8":
+      case "1":
         switch(res[1]){
           case 1:
             errTitle.innerHTML = "Please Sign-in or Sign-up"
@@ -52,7 +52,7 @@ function vote(pollid){
 }
 
 function readResult(res){
-    status = parseInt(res & 8)
+    status = parseInt(res & 8 >> 3)
     desc = parseInt(res & 7)
     return [status, desc]
 }
