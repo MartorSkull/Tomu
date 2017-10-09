@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.core import serializers
 from .models import *
+from .utils import intecheck
 import datetime
 import re
 import json
@@ -22,11 +23,19 @@ def polls(request):
     polls=Poll.objects.all().order_by("-created")
     return render(request, "polls.html", {"polls": polls})
 
+def poll(request, id):
+    try:
+        poll = Poll.objects.get(pk=id)
+    except Exception:
+        return redirect('polls')
+    return render(request, "poll.html", {"poll": poll})
+
 def getPoll(request, id):
     poll = Poll.objects.filter(id=id).first()
     data = {
         "id": poll.id,
         "columns": [[x.choice, x.voted()] for x in poll.allChoices()],
+        "code": 0,
     }
 
     return HttpResponse(json.dumps(data), content_type='application/json')
@@ -36,9 +45,8 @@ def makePoll(request):
         title = request.POST['Title']
         closetime = datetime.now() + datetime.timedelta(hours=request.POST['hours'])
         answers = []
-        for a in request.POST.keys():
-            if re.search(r'^a(\d+)', a) != None:
-                answers.append(request.POST[a])
+        for a in request.POST['answers']:
+                answers.append(a)
         if len(answers) <= 1:
             return HttpResponse(status=400)
 
@@ -51,8 +59,16 @@ def makePoll(request):
         return redirect("polls")
     return redirect("polls")
 
-def vote(request, poll_id):
+def vote(request):
     if request.method == 'POST':
-        pass
-    else:
-        return HttpResponseRedirect("polls")
+        try:
+            choice=Choice.objects.get(id=request.POST['choice'])
+            poll = choice.poll
+        except:
+            return HttpResponse(404)
+        code, voto = intecheck.vote(poll.id, choice.idinPoll, request.user)
+        if code == 0:
+            return getPoll(request, poll.id)
+        else:
+            data = {"code": code}
+            return HttpResponse(json.dumps(data), content_type='application/json')

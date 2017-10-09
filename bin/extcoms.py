@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 from dingo.utils.utils import *
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 class ExtraCommands:
     def __init__(self, bot):
@@ -9,7 +10,7 @@ class ExtraCommands:
 
     @commands.command()
     async def purpose(self):
-        await self.bot.say("I. Pass. Butter")
+        await self.bot.say("I. : {}".format("http://i.imgur.com/A6pmS0X.png"))
 
     @commands.command(pass_context=True, hidden=True)
     async def sendnudes(self, ctx):

@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from datetime import datetime
+from django.utils import timezone
 # Create your models here.
 
 class Poll(models.Model):
@@ -9,6 +9,11 @@ class Poll(models.Model):
     closetime = models.DateTimeField()
     admin = models.ForeignKey(settings.AUTH_USER_MODEL)
 
+    def orderedChoices(self):
+        qs = Choice.objects.filter(poll=self).all()
+        sorted_results = sorted(qs, key= lambda t: t.voted(), reverse=True)
+        return sorted_results
+
     def allChoices(self):
         return Choice.objects.filter(poll=self)
 
@@ -16,7 +21,10 @@ class Poll(models.Model):
         return Choice.objects.filter(poll=self).count()
 
     def closed(self):
-        return closetime<=datetime.now()
+        return self.closetime<=timezone.now()
+
+    def hasVoted(self, user):
+        return Vote.objects.filter(user=user, choice__poll=self) != None
 
     class Meta:
         verbose_name = "poll"
@@ -24,7 +32,7 @@ class Poll(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 class Choice(models.Model):
     choice = models.CharField(max_length=80)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
