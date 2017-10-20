@@ -42,7 +42,7 @@ def create_poll(title, workhours, choices, user):
     if closetime<=timezone.now():
         return createResult(Status.BAD, DescriprionsPolls.NegativeTime), None
 
-    if not user.is_authenticated:
+    if not isinstance(user, AnonymousUser):
         return createResult(Status.BAD, DescriprionsPolls.NotLogged), None
 
     if len(choices)<2:
@@ -68,7 +68,7 @@ def create_poll(title, workhours, choices, user):
     return 0, poll
 
 def vote(poll_id, choice_iwp, user):
-    if not user.is_authenticated:
+    if not isinstance(user, AnonymousUser):
         return createResult(Status.BAD, DescriptionsVotes.NotLogged), None
 
     poll = Poll.objects.filter(pk=poll_id).first()
