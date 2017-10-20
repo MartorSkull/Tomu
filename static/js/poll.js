@@ -1,7 +1,8 @@
-function vote(pollid){
-  //var data = new FormData($("#form-"+pollid)[0]);
+function vote(){
+  //var data = new FormData($("#form-"+id)[0]);
   //console.log(data);
-  var form = document.getElementById('form-'+pollid);
+  var id = window.location.pathname.split("s/")[1];
+  var form = document.getElementById("choiceForm");
   var formData = new FormData(form);
   var cho = formData.get("choice");
   if (!cho){
@@ -24,9 +25,9 @@ function vote(pollid){
     errDesc = $("#error-desc")[0]
     switch(res[0]){
       case "0":
-        drawpoll(pollid);
+        drawpoll();
         break;
-      case "8":
+      case "1":
         switch(res[1]){
           case 1:
             errTitle.innerHTML = "Please Sign-in or Sign-up"

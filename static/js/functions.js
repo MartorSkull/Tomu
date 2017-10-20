@@ -1,3 +1,9 @@
+function readResult(res){
+    status = parseInt(res & 8 >> 3)
+    desc = parseInt(res & 7)
+    return [status, desc]
+}
+
 $(document).ready(function(){
  $('.dropdown-button').dropdown({
       inDuration: 300,

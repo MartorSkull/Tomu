@@ -58,27 +58,33 @@
       {% block bod %}
       {% endblock bod %}
       <footer class="page-footer white-text black">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 m6 s6">
-                <h5>Tomu</h5>
-                <u><a class="white-text" href="https://github.com/MartorSkull/Tomu">Git Hub</p></u></a>
-              </div>
-              <div class="col l6 m6 s6 right-align">
-                <u><a class="white-text" href="https://github.com/MartorSkull/">MartorSkull</p></u></a>
-                <u><a class="white-text" href="https://github.com/yeldon64/">Yeldon</p></u></a>
-                <u><a class="white-text" href="https://github.com/francobossio/">Franco Bossio</p></u></a>
-              </div>
-              
+        <div class="container">
+          <div class="row">
+            <div class="col l6 m6 s6">
+              <h5>Tomu</h5>
+              <u><a class="white-text" href="https://github.com/MartorSkull/Tomu">Git Hub</p></u></a>
+            </div>
+            <div class="col l6 m6 s6 right-align">
+              <u><a class="white-text" href="https://github.com/MartorSkull/">MartorSkull</p></u></a>
+              <u><a class="white-text" href="https://github.com/yeldon64/">Yeldon</p></u></a>
+              <u><a class="white-text" href="https://github.com/francobossio/">Franco Bossio</p></u></a>
             </div>
           </div>
+        </div>
           <div class="footer-copyright">
             <div class="container">
             2017 <u><a class="white-text"href="{% url 'license' %}">MIT License</a></u>
-            
             </div>
           </div>
-        </footer>
-        
+      </footer>
+        <div id="errmodal" class="modal">
+          <div class="modal-content">
+            <h4 id="error-title">Error</h4>
+            <p id="error-desc"></p>
+          </div>
+          <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+          </div>
+        </div>
   </body>
 </html>
