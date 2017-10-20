@@ -51,11 +51,6 @@ function vote(pollid){
   });
 }
 
-function readResult(res){
-    status = parseInt(res & 8 >> 3)
-    desc = parseInt(res & 7)
-    return [status, desc]
-}
 function drawthispoll(id){
 
   $.ajax({
@@ -121,13 +116,17 @@ function addPoll(){
   var title = formData.get("polltitle")
   var workhours = formData.get("workhours")
   var choices = []
-    for (var i=0;i<count;i++){
-      choices[i] = formData.get("choice"+(i+1))
+  for (var i=0;i<count;i++){
+    if (formData.get("choice"+(i+1)) != ""){
+      choices[i] = formData.get("choice"+(i+1));
     }
+  }
+  var data={"Title":title,"hours":workhours,"choices":choices,"csrfmiddlewaretoken":formData.get("csrfmiddlewaretoken")}
+  console.log(data)
   $.ajax({
     method:"POST",
     url: "/polls/new/",
-    data: {"Title":title,"hours":workhours,"answers":choices,"csrfmiddlewaretoken":formData.get("csrfmiddlewaretoken")}
+    data: data
   })
   .done(function(data){
     window.location.reload()

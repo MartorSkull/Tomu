@@ -19,9 +19,11 @@
       <div class="col s6">
         <div class="card black">
           <div class="card-content white-text">
+            <ul>
             {% for choice in poll.orderedChoices %}
-              <span>{{ forloop.counter }}. {{ choice.choice|title }}</span> <br>
+              <li>{{ choice.choice|title }}</li>
             {% endfor %}
+            </ul>
           </div>
         </div>
       </div>
@@ -41,15 +43,18 @@
           <div class="col s12">
             <div class="card black circle">
               <div class="card-content white-text">
+                <form id="choiceForm" accept-charset="utf-8">
+                  {% csrf_token %}
                 {% for choice in poll.allChoices %}
                     <input name="choice" class="" type="radio" id="{{choice.id}}" value="{{choice.id}}" {% if poll.closed %} disabled="disabled"{% endif %}/>
                     <label for="{{ choice.id }}">{{choice.choice}}</label><br>
                 {% endfor %}
+                </form>
               </div>
             </div>
           </div>
           <div class="col s12">
-            <div class="card black waves-effect waves-light">
+            <div class="card black waves-effect waves-light" onclick="vote()">
               <div class="card-content">
                 <h3 class="white-text">Vote</h2>
               </div>
