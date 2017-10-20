@@ -18,6 +18,10 @@ $(document).ready(function(){
   );
  $('.modal').modal();
 
+ $('#profile_button').on("click", function(){
+  console.log("adsasd");
+  $('#userdrop').dropdown('open');
+ });
 });
 
   
