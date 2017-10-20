@@ -20,7 +20,7 @@ import json
 # Create your views here.
 
 def polls(request):
-    polls=Poll.objects.all().order_by("-created")
+    polls=Poll.objects.all()
     return render(request, "polls.html", {"polls": polls})
 
 def poll(request, id):
@@ -46,14 +46,15 @@ def makePoll(request):
         title = request.POST['Title']
         workhours = request.POST['hours']
         answers = []
-        answers = request.POST.getlist('choices[]'):
+        answers = request.POST.getlist('choices[]')
 
-        poll = intecheck.create_poll(title=title, workhours=workhours, choices=answers, user=request.user)
+        code, poll = intecheck.create_poll(title=title, workhours=workhours, choices=answers, user=request.user)
 
-        data = {"code": 1}
+        print("{0:b}".format(code))
+
+        data = {"code": code}
 
         return HttpResponse(json.dumps(data), content_type='application/json')
-
     return redirect("polls")
 
 def vote(request):

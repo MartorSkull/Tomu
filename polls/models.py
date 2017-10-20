@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class Poll(models.Model):
     name = models.CharField(max_length=150)
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
     closetime = models.DateTimeField()
     admin = models.ForeignKey(settings.AUTH_USER_MODEL)
 
@@ -29,6 +29,7 @@ class Poll(models.Model):
     class Meta:
         verbose_name = "poll"
         verbose_name_plural = "polls"
+        ordering = ['created']
 
     def __str__(self):
         return self.name

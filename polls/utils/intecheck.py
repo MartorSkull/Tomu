@@ -55,8 +55,6 @@ def create_poll(title, workhours, choices, user):
         poll.save()
     except:
         return createResult(Status.BAD, DescriprionsPolls.ErrorCreatingPoll), None
-
-
     try:
         for i in range(len(choices)):
             choice = Choice(choice=choices[i], 

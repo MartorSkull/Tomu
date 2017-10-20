@@ -51,11 +51,6 @@ function vote(pollid){
   });
 }
 
-function readResult(res){
-    status = parseInt(res & 8 >> 3)
-    desc = parseInt(res & 7)
-    return [status, desc]
-}
 function drawthispoll(id){
 
   $.ajax({
