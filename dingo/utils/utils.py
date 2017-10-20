@@ -19,7 +19,7 @@ def require_login():
                 else:
                     pass
             else:
-                return await self.bot.send_message(ctx.message.channel, "You have to register to use some commands. Use the `{}register` command".format(self.bot.command_prefix[0]))
+                return await self.bot.send_message(ctx.message.channel, self.bot.strings["utils"]["require_login"]["registration"].format(**{'prefix':self.bot.command_prefix[0]}))
         return wrapped
     return wrapper
 
@@ -69,7 +69,7 @@ def anti_spam(timeBetween, multiple_calls=1, until_stop_responding=5, until_bloc
 
             if com["numberOfCalls"]>multiple_calls and now - datetime.datetime(**com["lastCall"])<=timeBetween:
                 if not com["numberOfCalls"]-until_stop_responding>multiple_calls:
-                    return await self.bot.send_message(ctx.message.channel, "Too many simultaneous calls.")
+                    return await self.bot.send_message(ctx.message.channel, self.bot.strings["utils"]["antispam"]["2manycalls"])
                 else:
                     return
 
