@@ -1,4 +1,4 @@
-#!/usr/bin/python3.5
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from discord.ext import commands
 from django.conf import settings
@@ -10,6 +10,7 @@ import os
 import traceback
 import importlib
 import atexit
+from datetime import datetime
 
 class DingoB(commands.Bot):
     def __init__(self):
@@ -155,7 +156,8 @@ class DingoB(commands.Bot):
                 msg += "\n{}: `{}: {}`".format(*f)
             await self.send_message(self.output, msg)
 
-        await self.send_message(self.output, "{} is back".format(self.user.name))
+        #await self.send_message(self.output, "{} is back".format(self.user.name))
+        await self.send_message(self.output, self.strings["info"]["reconnection"].format(**{'botname': self.user.name,'day': datetime.now().day,'month': datetime.now().month,'year': datetime.now().year,'hour':datetime.now().hour,'minute':datetime.now().minute,'second':datetime.now().second,'microsecond':datetime.now().microsecond}))
 
 
     def begin(self):

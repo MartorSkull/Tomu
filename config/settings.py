@@ -135,6 +135,7 @@ BOTCONFIG={
     'strings':{
         'info': {
             'description': "Tomu - The bot with its own webpage", #bots description
+            'reconnection': "Guess who's back b*tches. It's ya boi {botname}, on {day}/{month}/{year} at {hour}:{minute}:{second}", #bot reconnection message
         },
         'errors': { #variables:
                         #user = metions the user that called the command
@@ -143,8 +144,30 @@ BOTCONFIG={
             'missing-permissions': "{user} you don't have permission to use the `{command}` command",
             'missing_argument': "{user} you are missing required arguments.\n{format}",
             'bad_argument': "{user} you miss entered an argument in the `{command}` command.\n{format}",
-            'regular_error': "An error occured while processing the `{command}` command."
-        }
+            'regular_error': "An error occured while processing the `{command}` command.",
+        },
+        
+        'utils':{
+            'antispam':{
+                '2manycalls': "Too many simultaneous calls.",
+            },
+            'require_login':{
+                'registration': "You have to register to use some commands. Use the `{prefix}register` command",
+            },
+            
+        },
+        'commands':{
+            'hi': "hi {name}, how are you?",
+            'register':{
+                'username_linked':"This discord account has already a username linked to it",
+                'username_petition':"Please send a message with your username in the website",
+                'acc_linked_discord':"This account has already been linked to another discord account",
+                'passwd':"Please send the password.",
+                'user_already_registered':"You are already registered. you don't have to use this command again",
+                'succ_registered': "Success now you can use the commands in the server. Also you can delete the message with your password. It will not be saved",
+                'error': "That wasn't quite right. Try again",
+            },
+        },
     },
     'server': {
         'announces': "announcements", #the name of the anouncements channel
