@@ -135,7 +135,7 @@ BOTCONFIG={
     'strings':{
         'info': {
             'description': "Tomu - The bot with its own webpage", #bots description
-            'reconnection': "Guess who's back b*tches. It's ya boi {botname}, on {day}/{month}/{year} at {hour}:{minute}:{second}", #bot reconnection message
+            'reconnection': "{botname} is back, on {day}/{month}/{year} at {hour}:{minute}:{second}", #bot reconnection message
         },
         'errors': { #variables:
                         #user = metions the user that called the command

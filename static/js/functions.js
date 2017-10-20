@@ -3,7 +3,7 @@ $(document).ready(function(){
       inDuration: 300,
       outDuration: 225,
       constrainWidth: false, // Does not change width of dropdown to that of the activator
-      hover: false, // Activate on hover
+      hover: true, // Activate on hover
       gutter: 0, // Spacing from edge
       belowOrigin: true, // Displays dropdown below the button
       alignment: 'left', // Displays dropdown with edge aligned to the left of button
@@ -12,6 +12,10 @@ $(document).ready(function(){
   );
  $('.modal').modal();
 
+ $('#profile_button').on("click", function(){
+  console.log("adsasd");
+  $('#userdrop').dropdown('open');
+ });
 });
 
   

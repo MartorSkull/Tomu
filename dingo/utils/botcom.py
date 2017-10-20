@@ -18,17 +18,17 @@ class OfficialCommands:
     async def register(self, ctx):
         check = Chatter.objects.filter(discord_id=ctx.message.author.id).first()
         if check:
-            await self.bot.send_message(ctx.message.author, self.bot.strings["utils"]["register"]["username_linked"])
+            await self.bot.send_message(ctx.message.author, self.bot.strings["commands"]["register"]["username_linked"])
             return
         del check
         counter = 0
-        await self.bot.send_message(ctx.message.author, self.bot.strings["utils"]["register"]["username_petition"])
+        await self.bot.send_message(ctx.message.author, self.bot.strings["commands"]["register"]["username_petition"])
         username = await self.bot.wait_for_message(author=ctx.message.author)
         check = Chatter.objects.filter(user__username=username.content).first()
         if check:
-            await self.bot.send_message(ctx.message.author, self.bot.strings["utils"]["register"]["acc_linked_discord"])
+            await self.bot.send_message(ctx.message.author, self.bot.strings["commands"]["register"]["acc_linked_discord"])
             return
-        await self.bot.send_message(ctx.message.author, self.bot.strings["utils"]["register"]["passwd"])
+        await self.bot.send_message(ctx.message.author, self.bot.strings["commands"]["register"]["passwd"])
         password = await self.bot.wait_for_message(author=ctx.message.author)
         user = authenticate(username=username.content, password=password.content)
         if user:
@@ -38,11 +38,11 @@ class OfficialCommands:
                 new = Chatter(user=user, discord_id=ctx.message.author.id, discord_username=ctx.message.author.name)
                 new.save()
             except IntegrityError:
-                await self.bot.send_message(ctx.message.author,self.bot.strings["utils"]["register"]["user_already_registered"] )
+                await self.bot.send_message(ctx.message.author,self.bot.strings["commands"]["register"]["user_already_registered"] )
                 return
-            await self.bot.send_message(ctx.message.author, self.bot.strings["utils"]["register"]["succ_registered"] )
+            await self.bot.send_message(ctx.message.author, self.bot.strings["commands"]["register"]["succ_registered"] )
             return
-        await self.bot.send_message(ctx.message.author, self.bot.strings["utils"]["register"]["error"])
+        await self.bot.send_message(ctx.message.author, self.bot.strings["commands"]["register"]["error"])
 
 
 def setup(bot):
