@@ -135,7 +135,7 @@ BOTCONFIG={
     'strings':{
         'info': {
             'description': "Tomu - The bot with its own webpage", #bots description
-            'reconnection': "{botname} is back, on {day}/{month}/{year} at {hour}:{minute}:{second}", #bot reconnection message
+            'reconnection': "{botname} is back", #bot reconnection message. This will be passed to the log format
         },
         'errors': { #variables:
                         #user = metions the user that called the command
@@ -154,7 +154,9 @@ BOTCONFIG={
             'require_login':{
                 'registration': "You have to register to use some commands. Use the `{prefix}register` command",
             },
-            
+            'log':{
+                'format': "[{day}/{month}/{year} {hour}:{minute}:{second}] \"{message}\"",
+            },
         },
         'commands':{
             'hi': "hi {name}, how are you?",

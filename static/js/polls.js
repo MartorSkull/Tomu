@@ -90,12 +90,6 @@ function drawthispoll(id){
 //    "choices":[["hola", 5],["chau", 8]],
 //    }, );
 //
-var count = 1;
-$(document).ready(function(){
-  document.getElementById("choice"+count).addEventListener("input", addChoice);
-  document.getElementById("confirm_poll").addEventListener("click", addPoll);
-  
-});
 
 function addChoice(){
     var btn = document.createElement("INPUT");
@@ -122,14 +116,50 @@ function addPoll(){
     }
   }
   var data={"Title":title,"hours":workhours,"choices":choices,"csrfmiddlewaretoken":formData.get("csrfmiddlewaretoken")}
-  console.log(data)
   $.ajax({
     method:"POST",
     url: "/polls/new/",
     data: data
   })
   .done(function(data){
-    window.location.reload()
+    res = readResult(data["code"])
+    errTitle = $("#error-title")[0]
+    errDesc = $("#error-desc")[0]
+    switch(res[0]){
+      case "0":
+        //window.location.reload()
+        break;
+      case "1":
+        switch(res[1]){
+          case 1:
+            errTitle.innerHTML = "Please Sign-in or Sign-up"
+            errDesc.innerHTML = "To vote you must be registered and loged"
+            break;
+          case 2:
+            errTitle.innerHTML = "The title is too small"
+            errDesc.innerHTML = "Please input a longer title(minimum 3 characters)"
+            break;
+          case 3:
+            errTitle.innerHTML = "The time must be positive"
+            errDesc.innerHTML = "Please input a positive closetime"
+            break;
+          case 4:
+            errTitle.innerHTML = "There were no choices made"
+            errDesc.innerHTML = "Please input the name of at least 2 choices"
+            break;
+          case 5:
+            errTitle.innerHTML = "There has been an error creating the Poll"
+            errDesc.innerHTML = "Please contact an administrator"
+            break;
+          case 6:
+            errTitle.innerHTML = "There has been an error creating the Choices"
+            errDesc.innerHTML = "Please contact an administrator"
+            break;
+        }
+        $('#errmodal').modal('open'); 
+        break;
+      }
+
   });
 }
 //function addPoll(){
@@ -152,9 +182,12 @@ function addPoll(){
 //   });
 // }
 
+var count = 1;
 $(document).ready(function(){
   google.charts.load('current', {packages: ['corechart']});
     $('#errmodal').modal();
+    document.getElementById("choice"+count).addEventListener("input", addChoice);
+    document.getElementById("confirm_poll").addEventListener("click", addPoll);
 
 });
 

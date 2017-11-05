@@ -20,6 +20,9 @@ class Poll(models.Model):
     def countChoices(self):
         return Choice.objects.filter(poll=self).count()
 
+    def countVotes(self):
+        return Vote.objects.filter(choice__poll=self).count()
+
     def closed(self):
         return self.closetime<=timezone.now()
 
@@ -29,7 +32,7 @@ class Poll(models.Model):
     class Meta:
         verbose_name = "poll"
         verbose_name_plural = "polls"
-        ordering = ['created']
+        ordering = ['-created']
 
     def __str__(self):
         return self.name

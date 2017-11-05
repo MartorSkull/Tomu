@@ -42,15 +42,12 @@ def getPoll(request, id):
 
 def makePoll(request):
     if request.method == 'POST':
-        print(request.POST)
         title = request.POST['Title']
         workhours = request.POST['hours']
         answers = []
         answers = request.POST.getlist('choices[]')
 
         code, poll = intecheck.create_poll(title=title, workhours=workhours, choices=answers, user=request.user)
-
-        print("{0:b}".format(code))
 
         data = {"code": code}
 

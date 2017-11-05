@@ -7,6 +7,8 @@ from enum import IntEnum
 
 def createResult(status, description):
     res = (status.value << 3) | description.value
+    print("{0:b}".format(res))
+    print("{0:b}".format(8))
     return res
 
 def readResult(res):
@@ -42,7 +44,7 @@ def create_poll(title, workhours, choices, user):
     if closetime<=timezone.now():
         return createResult(Status.BAD, DescriprionsPolls.NegativeTime), None
 
-    if not isinstance(user, AnonymousUser):
+    if not user.is_authenticated:
         return createResult(Status.BAD, DescriprionsPolls.NotLogged), None
 
     if len(choices)<2:
@@ -68,7 +70,7 @@ def create_poll(title, workhours, choices, user):
     return 0, poll
 
 def vote(poll_id, choice_iwp, user):
-    if not isinstance(user, AnonymousUser):
+    if not user.is_authenticated:
         return createResult(Status.BAD, DescriptionsVotes.NotLogged), None
 
     poll = Poll.objects.filter(pk=poll_id).first()

@@ -17,9 +17,8 @@ class ExtraCommands:
         await self.bot.say("https://www.reddit.com/r/gonewild/. You're welcome {}".format(ctx.message.author.mention))
 
     @commands.command(pass_context=True, hidden=True)
-    @anti_spam(timeBetween=datetime.timedelta(minutes=1), multiple_calls=2, until_stop_responding=2, until_blocking=3)
     async def test(self, ctx):
-        await self.bot.add_reaction(ctx.message, u"\u2705")
+        await self.bot.log(self)
 
     @commands.command()
     async def error(self):
