@@ -21,8 +21,9 @@
   <body bgcolor="#a6a8b6" {% block bodmod %}{% endblock bodmod %}>
     <ul id="userdrop" class="dropdown-content log-in black">
     {% if user.is_authenticated %}  
-      <li><a href="/me"><i class="material-icons">perm_identity</i>Profile</a></li>
-      <li><a href="{% url 'logout' %}"><i class="material-icons">input</i>Logout</a></li>
+      <li><span class="white-text">Welcome {{user.name}}</span></li>
+      <li><a href="/me" class="white-text"><i class="material-icons white-text">perm_identity</i>Profile</a></li>
+      <li><a href="{% url 'logout' %}" class="white-text"><i class="material-icons white-text">input</i>Logout</a></li>
     {% else %}
       <form action="{% url 'login' %}" method="POST" accept-charset="utf-8">
 
@@ -31,7 +32,9 @@
         <input type="Password" name="password" placeholder=" Password"><br>
 
         <center><button class="btn waves-effect waves-red black" type="submit">Log In</button></center>
+       
       </form>
+       <center><a href="{% url 'register' %}" class="btn waves-effect waves-red black">Register</a></center>
     {% endif %}
     </ul>
 

@@ -1,0 +1,57 @@
+{% extends "Base.html" %}
+
+{% block title %}Tomu{% endblock title %}
+
+{% block imports %}
+  {% load static %}
+
+ {% endblock imports %}
+
+{% block bod %} <br>
+<div class="z-depth-5 container black white-text"><br>
+	<p class="center">Register</p>
+		<form class="col s12" action="{% url 'register' %}" method="POST" accept-charset="utf-8">
+			{% csrf_token %}
+
+			<div class="container">
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="username" name="username" type="text" class="validate">
+						<label for="username">Username</label>
+						{% if usnm %}
+							<span style="color:red;">{{usnm_message}}</span>
+						{% endif %}
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="email" name="email" type="text" class="validate">
+						<label for="email">Email</label>
+						{% if email_e %}
+							<span style="color:red;">{{email_message}}</span>
+						{% endif %}
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="password" name="password" type="password" class="validate">
+						<label for="password">Password</label>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="password2" name="password2" type="password" class="validate">
+						<label for="password">Repeat Password</label>
+						{% if passwd %}
+							<span style="color:red;">{{passwd_message}}</span>
+						{% endif %}
+					</div>
+
+				</div>
+			<center><button class="btn waves-effect waves-red black" type="submit" >Sign Up</button></center><br>
+		</div>
+		</form>
+	</div>
+		<br><br><br><br><br>
+{% endblock bod %}

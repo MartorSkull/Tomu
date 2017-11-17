@@ -127,7 +127,7 @@ STATICFILES_DIRS = [
 
 BOTCONFIG={
     'bot':{
-        'prefixes': ["!"], #command prefixes
+        'prefixes': ["."], #command prefixes
         'token': botToken, #this is the Discord Token to connect
         'botmodule': "utils.botcom", #this is the module that the bot will search commands for in each app
         'extraCommands': "bin.extcoms" #this is the module that the bot will
