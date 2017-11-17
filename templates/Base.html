@@ -21,9 +21,11 @@
   <body bgcolor="#a6a8b6" {% block bodmod %}{% endblock bodmod %}>
     <ul id="userdrop" class="dropdown-content log-in black">
     {% if user.is_authenticated %}  
-      <li><span class="white-text">Welcome {{user.name}}</span></li>
-      <li><a href="/me" class="white-text"><i class="material-icons white-text">perm_identity</i>Profile</a></li>
-      <li><a href="{% url 'logout' %}" class="white-text"><i class="material-icons white-text">input</i>Logout</a></li>
+      <div class="containerasd">
+        <center><span class="white-text">Welcome {{user.username|title}}</span></center>
+      
+      <li><center><a href="/me" class="white-text"><i class="material-icons white-text">perm_identity</i>Profile</a></center></li>
+      <li><center><a href="{% url 'logout' %}" class="white-text"><i class="material-icons white-text">input</i>Logout</a></center></li></div>
     {% else %}
       <form action="{% url 'login' %}" method="POST" accept-charset="utf-8">
 
