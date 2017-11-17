@@ -24,6 +24,18 @@ def require_login():
     return wrapper
 
 
+"""
+{id: {
+    command: {
+        lastCall: datetime, 
+        numberOfCalls: int,
+        hasBlock: bool
+        },
+        *
+    },
+    *
+}
+"""
 def anti_spam(timeBetween, multiple_calls=1, until_stop_responding=5, until_blocking=None):
     def wrapper(func):
         @functools.wraps(func)
@@ -78,15 +90,7 @@ def anti_spam(timeBetween, multiple_calls=1, until_stop_responding=5, until_bloc
         return wrapped
     return wrapper
 
-"""
-{id: {
-    command: {
-        lastCall: datetime, 
-        numberOfCalls: int,
-        hasBlock: bool
-        },
-        *
-    },
-    *
-}
-"""
+class BotLoger(object):
+    """TODO"""
+    def __init__(self, bot):
+        self.bot = bot

@@ -1,6 +1,7 @@
 function readResult(res){
-    status = parseInt(res & 8 >> 3)
-    desc = parseInt(res & 7)
+    status = parseInt(res) & 8 >> 3
+    console.log(status)
+    desc = parseInt(res) & 7
     return [status, desc]
 }
 

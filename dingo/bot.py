@@ -11,11 +11,13 @@ import traceback
 import importlib
 import atexit
 from datetime import datetime
+import logging
 
 class DingoB(commands.Bot):
     def __init__(self):
         #print("{} bot".format(os.getpid()))
         self.config=settings.BOTCONFIG
+        self.logger = logging.getLogger(__name__)
 
         prefix=settings.BOTCONFIG['bot']['prefixes']
         self.strings = self.config['strings']
@@ -37,7 +39,8 @@ class DingoB(commands.Bot):
         self.on_ready = self.event(self.on_ready)
         self.on_command_error = self.event(self.on_command_error)
 
-  
+        atexit.register(self.close)
+
         self.all_ready = False
 
         #serching for the plugins
@@ -157,7 +160,16 @@ class DingoB(commands.Bot):
             await self.send_message(self.output, msg)
 
         #await self.send_message(self.output, "{} is back".format(self.user.name))
-        await self.send_message(self.output, self.strings["info"]["reconnection"].format(**{'botname': self.user.name,'day': datetime.now().day,'month': datetime.now().month,'year': datetime.now().year,'hour':datetime.now().hour,'minute':datetime.now().minute,'second':datetime.now().second,'microsecond':datetime.now().microsecond}))
+        await self.log(self.strings["info"]["reconnection"].format(**{
+            'botname': self.user.name,
+            'day': datetime.now().day,
+            'month': datetime.now().month,
+            'year': datetime.now().year,
+            'hour':datetime.now().hour,
+            'minute':datetime.now().minute,
+            'second':datetime.now().second,
+            'microsecond':datetime.now().microsecond
+            }))
 
 
     def begin(self):
@@ -170,8 +182,22 @@ class DingoB(commands.Bot):
                 f.write("{}")
         self.run(self.config['bot']['token'])
 
+    async def log(self, message):
+        self.logger.info(message)
+        await self.send_message(self.output, self.strings["utils"]["log"]["format"].format(**{
+            'botname': self.user.name,
+            'day': datetime.now().day,
+            'month': datetime.now().month,
+            'year': datetime.now().year,
+            'hour':datetime.now().hour,
+            'minute':datetime.now().minute,
+            'second':datetime.now().second,
+            'microsecond':datetime.now().microsecond,
+            'message':message,
+            }))
 
+    async def botPrint(self, what):
+        await self.send_message(self.output, what)
 
-@atexit.register
-def close():
-    os.remove('lock')
+    def close(self):
+        os.remove('lock')

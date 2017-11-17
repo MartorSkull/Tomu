@@ -22,7 +22,7 @@
 				<div class="card-stacked">
 					<div class="cardpoll">
 						<a href="{% url 'poll' poll.id %}"><span class="card-title">{{poll|title}}{% if poll.closed %} <span class="grey-text">- Closed </span>{% endif %}</span><br></a>
-						<span class="grey-text by"><i>By: {{ poll.admin|title }}</i></span>
+						<span class="grey-text by"><i>By: {{ poll.admin|title }} - {{ poll.created }}</i></span>
 					</div>
 					<div class="card-content" style="padding: 10px;">
 						<form action="{% url 'polls' %}" id="form-{{ poll.id }}" method="POST" accept-charset="utf-8">
