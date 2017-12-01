@@ -43,7 +43,10 @@ def getPoll(request, id):
 def makePoll(request):
     if request.method == 'POST':
         title = request.POST['Title']
-        workhours = request.POST['hours']
+        try:
+            workhours = int(request.POST['hours'])
+        except ValueError:
+            workhours=6
         answers = []
         answers = request.POST.getlist('choices[]')
 

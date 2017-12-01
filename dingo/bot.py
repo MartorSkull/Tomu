@@ -49,13 +49,17 @@ class DingoB(commands.Bot):
         for i in settings.INSTALLED_APPS:
             if 'django' in i:
                 continue
-            check = importlib.util.find_spec(".{}".format(self.commodule), package=i)
-            if check is not None:
-                plugins.append("{}.{}".format(i, self.commodule))
+            try:
+                check = importlib.util.find_spec(".{}".format(self.commodule), package=i)
+                if check is not None:
+                    plugins.append("{}.{}".format(i, self.commodule))
 
-        check = importlib.util.find_spec("{}".format(self.config["bot"]["extraCommands"]))
-        if check is not None:
-            plugins.append(self.config["bot"]["extraCommands"])
+                check = importlib.util.find_spec("{}".format(self.config["bot"]["extraCommands"]))
+                if check is not None:
+                    plugins.append(self.config["bot"]["extraCommands"])
+            except ModuleNotFoundError:
+                continue
+
 
         self.failedplugins = []
 

@@ -184,7 +184,7 @@ function addPoll(){
 
 var count = 1;
 $(document).ready(function(){
-  google.charts.load('current', {packages: ['corechart']});
+    google.charts.load('current', {packages: ['corechart']});
     $('#errmodal').modal();
     document.getElementById("choice"+count).addEventListener("input", addChoice);
     document.getElementById("confirm_poll").addEventListener("click", addPoll);
