@@ -49,7 +49,7 @@ class Polls:
             flag = False
             error=["no",
             "Please log in",
-            "This poll is closed or doens't exist",
+            "This poll is closed or doesn't exist",
             "Error in the choice's or the poll's id",]
             desc = intecheck.readResult(code)[1]
             if desc>=4:
